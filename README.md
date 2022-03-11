@@ -7,6 +7,10 @@ It allows for easy injection of special actions a player may use by attaching ob
 
 I will add general language documentation over time, for now the [wiki](https://github.com/Five-Thousand-Kings/TodoGrow.Wiki/wiki) for the garden game might be the best starting point.
 
+### nuget:
+```sh
+# coming soon, i guess
+```
 
 
 

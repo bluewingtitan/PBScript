@@ -11,6 +11,10 @@ public static class PbsInterpreter
     public const string SingleLineComment = "//";
     
     public static bool Log = false;
+    /// <summary>
+    /// Interprets programText to executable form
+    /// </summary>
+    /// <exception cref="PbsException">Thrown for all different kinds of interpretation issues, including all relevant information to track it down</exception>
     public static PbsInterpretationResults InterpretProgram(string programText)
     {
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
@@ -102,6 +106,7 @@ public static class PbsInterpreter
             {"request", () => new RequestElement()},
             {"if", () => new IfElement()},
             {"else", () => new ElseElement()},
+            {"elseif", () => new ElseIfElement()},
             {"while", () => new WhileElement()},
             {"end", () => new EndElement()},
             {"var", () => new VariableElement()},

@@ -10,9 +10,9 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
     
     public override int Execute(IPbsEnvironment env)
     {
-        _lastResult = _metaAction.Execute(env);
+        LastResult = _metaAction.Execute(env);
 
-        if (_lastResult)
+        if (LastResult)
             return LineIndex + 1;
 
         return BlockEndLineIndex;
@@ -56,6 +56,10 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         BlockEndLineIndex = blockEnd.LineIndex;
     }
 
-    private bool _lastResult;
-    public bool LastConditionMet() => _lastResult;
+    protected bool LastResult;
+
+    public bool LastConditionMet()
+    {
+        return LastResult;
+    }
 }

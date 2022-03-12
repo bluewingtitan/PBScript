@@ -1,6 +1,5 @@
 using PBScript.Exception;
 using PBScript.Interfaces;
-using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
@@ -29,18 +28,12 @@ public class ActionElement: ElementBase
         return true;
     }
 
-    public override IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
+    public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
         
         var a = new Action(code);
         _action = a;
         Token = a.ObjectToken;
-
-        return new ParseLineResult
-        {
-            IsBlockEnd = false,
-            IsBlockStart = false
-        };
     }
 }

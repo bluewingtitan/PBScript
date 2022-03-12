@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 using PBScript.Exception;
 using PBScript.Interfaces;
-using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
@@ -28,7 +27,7 @@ public class RequestElement: ElementBase
         return true;
     }
 
-    public override IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
+    public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
 
@@ -41,8 +40,5 @@ public class RequestElement: ElementBase
         {
             throw new InvalidRequestException(LineText, SourceCodeLineNumber);
         }
-        
-        
-        return new ParseLineResult();
     }
 }

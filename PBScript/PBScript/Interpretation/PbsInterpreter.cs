@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using PBScript.Exception;
-using PBScript.Extension;
 using PBScript.Interfaces;
 using PBScript.ProgramElements;
 
@@ -8,7 +7,7 @@ namespace PBScript.Interpretation;
 
 public static class PbsInterpreter
 {
-    public const string SingleLineComment = "//";
+    private const string SingleLineComment = "//";
     
     public static bool Log = false;
     /// <summary>
@@ -21,10 +20,11 @@ public static class PbsInterpreter
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         
-        
-        var interpretationResults = new PbsInterpretationResults();
-        interpretationResults.TotalLines = Regex.Matches(programText, "\n").Count;
-        
+        var interpretationResults = new PbsInterpretationResults
+        {
+            TotalLines = Regex.Matches(programText, "\n").Count
+        };
+
         var lines = new List<string>(programText.Split("\n"));
 
         var blockStack = new Stack<IPbsBlockStart>();
@@ -146,10 +146,9 @@ public static class PbsInterpreter
             element = Tokens[token]();
         }
 
-        if(element == null) element = DefaultDelegate();
-        var results = element.ParseLine(newLine, lineIndex, sourceCodeLineNumber);
+        element ??= DefaultDelegate();
+        
+        element.ParseLine(newLine, lineIndex, sourceCodeLineNumber);
         return element;
     }
-    
-    
 }

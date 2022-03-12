@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 using PBScript.Environment;
 using PBScript.Exception;
-using PBScript.Extension;
 using PBScript.Interfaces;
 using PBScript.Interpretation;
 
@@ -37,7 +36,7 @@ public class VariableElement: ElementBase
         return true;
     }
     
-    public override IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
+    public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
         var actionCode = "";
@@ -53,7 +52,5 @@ public class VariableElement: ElementBase
         var action = new Action(actionCode);
         _action = action;
         _varName = action.ObjectToken;
-        
-        return new ParseLineResult();
     }
 }

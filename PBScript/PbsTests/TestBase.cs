@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using NUnit.Framework;
 using PBScript.Environment;
-using PBScript.Interfaces;
 using PBScript.Interpretation;
 using PbsTexts.TestObjects;
 

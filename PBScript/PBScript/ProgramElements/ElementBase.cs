@@ -1,5 +1,4 @@
 using PBScript.Interfaces;
-using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
@@ -14,12 +13,10 @@ public abstract class ElementBase: IPbsElement
 
     public abstract bool CheckValid();
 
-    public virtual IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
+    public virtual void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         LineText = code;
         LineIndex = lineIndex;
         SourceCodeLineNumber = sourceCodeLineNumber;
-
-        return new ParseLineResult();
     }
 }

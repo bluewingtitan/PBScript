@@ -1,6 +1,5 @@
 using PBScript.Exception;
 using PBScript.Interfaces;
-using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
@@ -28,7 +27,7 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         return true;
     }
     
-    public override IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
+    public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
         var actionCode = "";
@@ -42,12 +41,6 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         }
         
         _metaAction = new Action(actionCode);
-
-        return new ParseLineResult
-        {
-            IsBlockStart = true,
-            IsBlockEnd = false,
-        };
     }
 
     public int BlockEndLineIndex { get; private set; }

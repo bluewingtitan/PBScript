@@ -24,7 +24,7 @@ public interface IPbsElement
     /// Reads the line into the object
     /// </summary>
     /// <returns>The left over string not contained in this element</returns>
-    public IParseLineResult ParseLine(string code, int lineIndex, int sourceCodeLineNumber);
+    public void ParseLine(string code, int lineIndex, int sourceCodeLineNumber);
 }
 
 public interface IPbsBlockStart: IPbsElement

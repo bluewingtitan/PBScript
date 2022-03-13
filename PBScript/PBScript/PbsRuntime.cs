@@ -3,10 +3,9 @@ using PBScript.Interpretation;
 
 namespace PBScript;
 
-public class PbsRuntime
+public class PbsRuntime: IPbsRuntime
 {
     public bool IsFinished => _pointer >= _elements.Count;
-
     private int _pointer = 0;
     private readonly List<IPbsElement> _elements;
     private readonly IPbsEnvironment _environment;
@@ -17,12 +16,11 @@ public class PbsRuntime
         _elements = results.Elements;
     }
 
-
     public void ExecuteNext()
     {
         if(IsFinished)
             return;
-
+        
         _pointer = _elements[_pointer].Execute(_environment);
     }
 

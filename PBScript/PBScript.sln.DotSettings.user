@@ -11,5 +11,7 @@
     &lt;TestId&gt;NUnit3x::0B42498A-B569-4941-9153-716077BA1898::net6.0::PbsTexts.LanguageFeatures.WhileTest&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::0B42498A-B569-4941-9153-716077BA1898::net6.0::PbsTexts.LanguageFeatures.ElseIfTest&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::0B42498A-B569-4941-9153-716077BA1898::net6.0::PbsTexts.LanguageFeatures.ElseIfBlockCountTest&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::0B42498A-B569-4941-9153-716077BA1898::net6.0::PbsTexts.LanguageFeatures.LabelTest&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::0B42498A-B569-4941-9153-716077BA1898::net6.0::PbsTexts.LanguageFeatures.VariableAssignmentTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -5,7 +5,10 @@ namespace PBScript;
 /// </summary>
 public static class PbsInfo
 {
+    public static string VersionCode = $"{MajorVersion}.{MinorVersion}.{SubMinorVersion} patch_{PatchVersion}";
+    
     public const int MajorVersion = 0;
-    public const int MinorVersion = 2;
-    public const int PatchVersion = 220312;
+    public const int MinorVersion = 3;
+    public const int SubMinorVersion = 3;
+    public const int PatchVersion = 220313;
 }

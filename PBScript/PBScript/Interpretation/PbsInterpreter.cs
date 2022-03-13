@@ -29,6 +29,8 @@ public static class PbsInterpreter
 
         var blockStack = new Stack<IPbsBlockStart>();
         var lineList = new List<IPbsElement>();
+        var labelLines = new Dictionary<string, int>();
+        var gotoElements = new List<GotoElement>();
         
         for (var i = 0; i < lines.Count; i++)
         {
@@ -68,7 +70,12 @@ public static class PbsInterpreter
 
             if (element is IPbsBlockStart start) 
                 blockStack.Push(start);
-
+            
+            if(element is LabelElement le)
+                labelLines[le.LabelName] = le.LineIndex;
+            
+            if(element is GotoElement ge)
+                gotoElements.Add(ge);
         }
 
         if (blockStack.Count > 0)
@@ -77,7 +84,10 @@ public static class PbsInterpreter
             throw new UnclosedBlockException(missingBlock.Token, missingBlock.SourceCodeLineNumber);
         }
 
+        labelLines["end"] = lineList.Count;
+        
         CheckAll(lineList);
+        LinkLabelsToGoto(labelLines, gotoElements);
 
         interpretationResults.Elements = lineList;
         interpretationResults.LinesOfCode = lineList.Count;
@@ -96,6 +106,19 @@ public static class PbsInterpreter
         }
     }
 
+    private static void LinkLabelsToGoto(Dictionary<string, int> labels, List<GotoElement> gotos)
+    {
+        foreach (var element in gotos)
+        {
+            var name = element.LabelName;
+
+            if (labels.ContainsKey(name))
+            {
+                element.SetTargetLine(labels[name]);
+            }
+        }
+    }
+
     private delegate IPbsElement CreateElementDelegate();
 
     private static readonly CreateElementDelegate DefaultDelegate = () => new ActionElement(); 
@@ -110,6 +133,8 @@ public static class PbsInterpreter
             {"while", () => new WhileElement()},
             {"end", () => new EndElement()},
             {"var", () => new VariableElement()},
+            {"label", () => new LabelElement()},
+            {"goto", () => new GotoElement()},
         };
 
     public const string TokenRegex = @"[a-zA-Z\d_]+";

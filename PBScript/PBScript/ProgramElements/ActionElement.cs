@@ -31,6 +31,13 @@ public class ActionElement: ElementBase
     public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
+
+        code = code.Trim();
+        
+        if (code.StartsWith("$"))
+        {
+            code = code.Split("$", 2)[1];
+        }
         
         var a = new Action(code);
         _action = a;

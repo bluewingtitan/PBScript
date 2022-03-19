@@ -102,7 +102,7 @@ public class VariableObject : IPbsObject
     }
     private bool AddValue(string args)
     {
-        args = args.Trim().Replace("\\%"," ");
+        args = args.Trim();
         if (IsEquation(args) && Type != VariableType.String)
         {
             var newVal = ResolveNumberCalculation(args);
@@ -120,6 +120,8 @@ public class VariableObject : IPbsObject
         }
         else
         {
+            
+            
             if (Type == VariableType.Undefined)
             {
                 Value = args;

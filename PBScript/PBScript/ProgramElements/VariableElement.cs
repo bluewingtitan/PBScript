@@ -43,6 +43,11 @@ public class VariableElement: ElementBase
         try
         {
             actionCode = code.Split(Token,2)[1].Trim();
+
+            if (actionCode.StartsWith("$"))
+            {
+                actionCode = actionCode.Split("$", 2)[1];
+            }
         }
         catch (System.Exception _)
         {

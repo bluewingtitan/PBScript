@@ -8,7 +8,7 @@ public static class PbsInfo
     public static string VersionCode = $"{MajorVersion}.{MinorVersion}.{SubMinorVersion} patch_{PatchVersion}";
     
     public const int MajorVersion = 0;
-    public const int MinorVersion = 2;
-    public const int SubMinorVersion = 2;
-    public const int PatchVersion = 220314;
+    public const int MinorVersion = 4;
+    public const int SubMinorVersion = 0;
+    public const int PatchVersion = 220320;
 }

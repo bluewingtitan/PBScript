@@ -17,7 +17,6 @@ public class ActionElement: ElementBase
         return LineIndex + 1;
     }
 
-
     public override bool CheckValid()
     {
         if (_action == null)

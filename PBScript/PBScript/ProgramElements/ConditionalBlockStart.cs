@@ -40,7 +40,7 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
             throw new InvalidConditionException(LineText, SourceCodeLineNumber);
         }
         
-        _metaAction = new Action(actionCode);
+        _metaAction = new ConditionalAction(actionCode);
     }
 
     public int BlockEndLineIndex { get; private set; }

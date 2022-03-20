@@ -6,18 +6,28 @@ using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
-public class Action: IPbsAction
-{
+/// <summary>
+/// A special action
+/// </summary>
+public class ConditionalAction: IPbsAction
+{ 
         private readonly bool _alwaysFalse = false;
         public readonly string ObjectToken = "";
         private readonly string _actionToken = "";
         private readonly string _parameter = "";
+        private readonly bool _isBooleanExpression;
+
         private readonly string _text;
 
-        public Action(string actionCode)
+        public ConditionalAction(string actionCode)
         {
             actionCode = actionCode.Trim();
             _text = actionCode;
+            if (!Regex.IsMatch(actionCode, "^" + PbsInterpreter.TokenRegex))
+            {
+                _isBooleanExpression = true;
+                return;
+            }
 
             var objectMatches = Regex.Matches(actionCode, PbsInterpreter.TokenRegex);
 
@@ -27,7 +37,9 @@ public class Action: IPbsAction
                 return;
             }
             
+
             var p1 = actionCode.Split(objectMatches[0].Value,2);
+
 
             if (p1.Length < 1)
             {
@@ -41,6 +53,7 @@ public class Action: IPbsAction
                 
             _actionToken = parts.Length > 0 ? parts[0].Trim() : "";
             _parameter = parts.Length > 1 ? parts[1].Trim() : "";
+            
         }
 
         public bool Execute(IPbsEnvironment env)
@@ -52,20 +65,27 @@ public class Action: IPbsAction
 
             try
             {
+                if (_isBooleanExpression)
+                {
+                    var enriched = _text.EnrichString(env);
+                    var result = CSharpScript.EvaluateAsync<bool>(enriched).Result;
+                    return result;
+                }
+                
                 var obj = env.GetObject(ObjectToken);
                 var enrichedParameter = _parameter.EnrichString(env);
                 var enrichedToken = _actionToken.EnrichString(env);
 
                 value = obj?.ExecuteAction(enrichedToken, enrichedParameter, env) ?? false;
             }
-            catch (System.Exception e)
+            catch (System.Exception _)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(_);
                 value = false;
             }
             
             if(PbsInterpreter.Log) env.Log(_text, $" => {value}");
-            
+
             return value;
         }
 }

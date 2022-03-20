@@ -116,16 +116,22 @@ public static class PbsInterpreter
     private static IPbsElement LineToElement(string line, int lineIndex, int sourceCodeLineNumber)
     {
         line = line.Trim();
+
+        if (line.StartsWith("$"))
+            line = line.Split("$", 2)[1];
+        
         IPbsElement? element = null;
-        // Separate first token
+        // Separate first token + brackets
         var found = false;
         var newLine = Regex.Replace(line, TokenRegex, match =>
         {
             if (found)
                 return match.Value;
+            
             // the first token HAS to start at index 0
             if (match.Index > 0)
-                throw new InvalidLineException(line + " " + match.Index, sourceCodeLineNumber);
+                throw new InvalidLineException(line, sourceCodeLineNumber);
+            
 
             found = true;
 
@@ -145,7 +151,7 @@ public static class PbsInterpreter
         {
             element = Tokens[token]();
         }
-
+        
         element ??= DefaultDelegate();
         
         element.ParseLine(newLine, lineIndex, sourceCodeLineNumber);

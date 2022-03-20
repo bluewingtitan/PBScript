@@ -11,8 +11,8 @@ public class VariableChangeTest: TestBase
 
     private const string StringVarName = "string_variable";
     private const string StringVarInit = "This is a string!";
-    private const string StringAppend = "\\%And this is appended with a space with \\ and %!";
-    private const string StringAppendResult = "This is a string! And this is appended with a space with \\ and %!";
+    private const string StringAppend = @"\%And this is appended with a space with \ and %!";
+    private const string StringAppendResult = @"This is a string! And this is appended with a space with \ and %!";
     
     protected override string Code => $@"var {DoubleVarName} = {IntVarInitValue}
     {DoubleVarName}+={IntVarInitValue} // => 10

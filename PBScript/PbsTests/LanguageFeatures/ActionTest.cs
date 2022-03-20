@@ -6,7 +6,8 @@ public class ActionTest: TestBase
 {
     protected override string Code => @"counter add
 counter
-counter one two three
+if counter one two three
+end
 counter 238312213132test123";
 
     [Test]

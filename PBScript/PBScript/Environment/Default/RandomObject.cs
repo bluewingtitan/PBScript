@@ -20,6 +20,13 @@ public class RandomObject: ObjectBase
         return false;
     }
 
+    public RandomObject()
+    {
+        Register("bool", (s, e) => new PbsValue(NextBoolean()));
+        Register("boolean", (s, e) => new PbsValue(NextBoolean()));
+        Register("number", (s, e) => new PbsValue(NextNumber()));
+    }
+
     protected override IPbsValue DefaultAction(string param)
     {
         return new PbsValue(NextBoolean());
@@ -42,6 +49,6 @@ public class RandomObject: ObjectBase
 
     public override string GetStringValue()
     {
-        return _r.Next(0, 100).ToString();
+        return NextNumber() + "";
     }
 }

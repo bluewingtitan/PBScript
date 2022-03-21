@@ -177,7 +177,8 @@ public class VariableObject : ObjectBase
     
     protected override bool Is(string param)
     {
-        return Value.AsString().Trim().Equals(param.Trim());
+        return ValueType.ToString().ToLower().Trim()
+            .Equals(param.ToLower().Trim());
     }
 
 }

@@ -8,10 +8,10 @@ namespace PbsTexts.TestObjects;
 public class TestCounter: IPbsObject
 {
     public int Counter { get; private set; }
-    public bool ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {
         Counter++;
-        return true;
+        return PbsValue.True;
     }
 
     public string GetStringValue()

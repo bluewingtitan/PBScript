@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.2.0-1.final" />
+      <PackageReference Include="Flee" Version="1.2.2" />
     </ItemGroup>
 
 </Project>

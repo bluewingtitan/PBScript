@@ -10,9 +10,9 @@ public class VariableChangeTest: TestBase
     private const double IntVarInitValue = 5d;
 
     private const string StringVarName = "string_variable";
-    private const string StringVarInit = "This is a string!";
-    private const string StringAppend = @"\%And this is appended with a space with \ and %!";
-    private const string StringAppendResult = @"This is a string! And this is appended with a space with \ and %!";
+    private const string StringVarInit = "\"This is a string!\"";
+    private const string StringAppend = "\" And this is appended!\"";
+    private const string StringAppendResult = @"This is a string! And this is appended!";
     
     protected override string Code => $@"var {DoubleVarName} = {IntVarInitValue}
     {DoubleVarName}+={IntVarInitValue} // => 10
@@ -26,9 +26,9 @@ var {StringVarName} = {StringVarInit}
     {
         var doubleVar = _environment.GetObject(DoubleVarName) as VariableObject;
         Assert.NotNull(doubleVar);
-        Assert.AreEqual(VariableType.Number, doubleVar.Type);
-        Assert.True(doubleVar.Value is double);
-        Assert.True(Math.Abs((double)doubleVar.Value - 20d) < 0.01);
+        Assert.AreEqual(VariableType.Number, doubleVar.ValueType);
+        Assert.NotNull(doubleVar.Value.NumberValue);
+        Assert.True(Math.Abs((double)doubleVar.Value.NumberValue - 20d) < 0.01);
     }
 
     [Test]
@@ -36,9 +36,9 @@ var {StringVarName} = {StringVarInit}
     {
         var stringVar = _environment.GetObject(StringVarName) as VariableObject;
         Assert.NotNull(stringVar);
-        Assert.AreEqual(VariableType.String, stringVar.Type);
-        Assert.True(stringVar.Value is string);
-        Assert.AreEqual(StringAppendResult, (string) stringVar.Value);
+        Assert.AreEqual(VariableType.String, stringVar.ValueType);
+        Assert.False(string.IsNullOrEmpty(stringVar.Value.StringValue));
+        Assert.AreEqual(StringAppendResult, (string) stringVar.Value.StringValue);
     }
     
 }

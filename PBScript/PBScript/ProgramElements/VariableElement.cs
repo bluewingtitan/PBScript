@@ -14,8 +14,17 @@ public class VariableElement: ElementBase
     
     public override int Execute(IPbsEnvironment env)
     {
-        env.RegisterObject(_varName, new VariableObject(null, VariableType.Undefined), true);
+        if (PbsInterpreter.Log)
+        {
+            env.Log("var " + _varName, "register ");
+        }
+        env.RegisterObject(_varName, new VariableObject(), true);
 
+        if (PbsInterpreter.Log)
+        {
+            env.Log("var " + _varName, "set now");
+        }
+        
         _action.Execute(env);
         
         return LineIndex + 1;
@@ -54,7 +63,8 @@ public class VariableElement: ElementBase
             throw new InvalidVariableInitialization(LineText, SourceCodeLineNumber);
         }
         
-        var action = new Action(actionCode);
+        
+        var action = new PbsAction(actionCode);
         _action = action;
         _varName = action.ObjectToken;
     }

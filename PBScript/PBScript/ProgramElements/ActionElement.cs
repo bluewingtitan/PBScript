@@ -38,7 +38,7 @@ public class ActionElement: ElementBase
             code = code.Split("$", 2)[1];
         }
         
-        var a = new Action(code);
+        var a = new PbsAction(code);
         _action = a;
         Token = a.ObjectToken;
     }

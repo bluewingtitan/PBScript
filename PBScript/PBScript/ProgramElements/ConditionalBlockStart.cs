@@ -1,3 +1,4 @@
+using PBScript.Environment;
 using PBScript.Exception;
 using PBScript.Interfaces;
 
@@ -9,7 +10,8 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
     
     public override int Execute(IPbsEnvironment env)
     {
-        LastResult = _metaAction.Execute(env);
+        var r = _metaAction.Execute(env);
+        LastResult = r.ReturnType == VariableType.Boolean && r.BooleanValue != null && (bool) r.BooleanValue;
 
         if (LastResult)
             return LineIndex + 1;
@@ -40,7 +42,7 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
             throw new InvalidConditionException(LineText, SourceCodeLineNumber);
         }
         
-        _metaAction = new ConditionalAction(actionCode);
+        _metaAction = new PbsAction("(" + actionCode + ")");
     }
 
     public int BlockEndLineIndex { get; private set; }

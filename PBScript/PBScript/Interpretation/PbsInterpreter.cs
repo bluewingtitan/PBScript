@@ -9,7 +9,7 @@ public static class PbsInterpreter
 {
     private const string SingleLineComment = "//";
     
-    public static bool Log = true;
+    public static bool Log = false;
     /// <summary>
     /// Interprets programText to executable form
     /// </summary>

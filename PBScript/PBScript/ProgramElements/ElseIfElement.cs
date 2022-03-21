@@ -20,8 +20,8 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
             return BlockEndLineIndex;
         }
 
-        var r = _metaAction.Execute(env);
-        LastResult = r.ReturnType == VariableType.Boolean && r.BooleanValue != null && (bool) r.BooleanValue;
+        var r = _metaAction?.Execute(env);
+        LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
 
         if (LastResult)
             return LineIndex + 1;

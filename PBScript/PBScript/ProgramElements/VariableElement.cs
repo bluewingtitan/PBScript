@@ -9,7 +9,7 @@ namespace PBScript.ProgramElements;
 public class VariableElement: ElementBase
 {
     private string _varName = "";
-    private IPbsAction _action;
+    private IPbsAction? _action;
     public override string Token { get; protected set; } = "var";
     
     public override int Execute(IPbsEnvironment env)
@@ -25,7 +25,7 @@ public class VariableElement: ElementBase
             env.Log("var " + _varName, "set now");
         }
         
-        _action.Execute(env);
+        _action?.Execute(env);
         
         return LineIndex + 1;
     }
@@ -58,7 +58,7 @@ public class VariableElement: ElementBase
                 actionCode = actionCode.Split("$", 2)[1];
             }
         }
-        catch (System.Exception _)
+        catch (System.Exception)
         {
             throw new InvalidVariableInitialization(LineText, SourceCodeLineNumber);
         }

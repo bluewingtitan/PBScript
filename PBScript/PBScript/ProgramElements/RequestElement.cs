@@ -36,7 +36,7 @@ public class RequestElement: ElementBase
             _toRequest = code.Replace(Token, "").Trim().Split(" ",2)[0];
             CheckValid();
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
             throw new InvalidRequestException(LineText, SourceCodeLineNumber);
         }

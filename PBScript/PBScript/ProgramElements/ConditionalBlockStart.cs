@@ -6,12 +6,12 @@ namespace PBScript.ProgramElements;
 
 public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
 {
-    protected IPbsAction _metaAction;
+    protected IPbsAction? _metaAction;
     
     public override int Execute(IPbsEnvironment env)
     {
-        var r = _metaAction.Execute(env);
-        LastResult = r.ReturnType == VariableType.Boolean && r.BooleanValue != null && (bool) r.BooleanValue;
+        var r = _metaAction?.Execute(env);
+        LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
 
         if (LastResult)
             return LineIndex + 1;
@@ -37,7 +37,7 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         {
             actionCode = code.Split(Token,2)[1].Trim();
         }
-        catch (System.Exception _)
+        catch (System.Exception)
         {
             throw new InvalidConditionException(LineText, SourceCodeLineNumber);
         }

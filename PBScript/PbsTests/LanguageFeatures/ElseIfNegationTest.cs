@@ -9,28 +9,29 @@ namespace PbsTexts.LanguageFeatures;
 public class ElseIfNegationTest: TestBase
 {
     protected override string Code => @"// row of conditions again, but counter in each block (should still end up at 2)
+// only checks that if, else or elseif run exclusively in a block (never more than one of the three) 
 
-var x = 10
+var x set 10
 
-if $x == 0
-    x--
+if x == 0
+    x up
     counter
-elseif $x == 10
+elseif x == 10
     counter
 else
-    x--
+    x up
     counter
 end
 
 // x should be 10, would be 9 or even 8 if something went wrong.
 
-if $x == 9
-    x-=2
+if x == 9
+    x rmv 2
     counter
-elseif $x == 8
-    x--
+elseif x == 8
+    x down
     counter
-elseif $x==10
+elseif x==10
     counter
 else
     x = 7

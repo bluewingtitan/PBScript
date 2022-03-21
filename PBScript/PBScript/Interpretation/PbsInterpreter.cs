@@ -112,7 +112,7 @@ public static class PbsInterpreter
             {"var", () => new VariableElement()},
         };
 
-    public const string TokenRegex = @"[a-zA-Z\d_]+";
+    public const string TokenRegex = @"[a-zA-Z_][a-zA-Z\d_]*";
     private static IPbsElement LineToElement(string line, int lineIndex, int sourceCodeLineNumber)
     {
         line = line.Trim();

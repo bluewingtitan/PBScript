@@ -27,9 +27,9 @@ end";
     {
         var x1 = _environment.GetObject("x") as VariableObject;
         Assert.NotNull(x1);
-        Assert.AreEqual(VariableType.Number, x1.Type);
-        Assert.True(x1.Value is double);
-        Assert.True(Math.Abs((double)x1.Value - 0) < 0.01);
+        Assert.AreEqual(VariableType.Number, x1.ValueType);
+        Assert.NotNull(x1.Value.NumberValue);
+        Assert.True(Math.Abs((double)x1.Value.NumberValue - 0) < 0.01);
     }
     
 }

@@ -22,6 +22,11 @@ public class PbsRuntime
     {
         if(IsFinished)
             return;
+        
+        if (PbsInterpreter.Log)
+        {
+            _environment.Log("runtime", "RUN #" + _pointer);
+        }
 
         _pointer = _elements[_pointer].Execute(_environment);
     }

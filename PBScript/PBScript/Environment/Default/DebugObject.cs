@@ -12,7 +12,7 @@ COMMANDS:
     true simply returns true. does nothing else.";
     }
 
-    public bool ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {
         switch (command.Trim())
         {
@@ -21,14 +21,14 @@ COMMANDS:
                 break;
                 
             case "true":
-                return true;
+                return PbsValue.True;
                 
             default:
                 Console.WriteLine($"debug received command '{command}' with parameter '{parameter}'.");
                 break;
         }
 
-        return false;
+        return PbsValue.False;
     }
         
     public string GetStringValue()

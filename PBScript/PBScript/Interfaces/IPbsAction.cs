@@ -9,5 +9,5 @@ public interface IPbsAction
     /// Executes this action.
     /// </summary>
     /// <returns>If action was successful</returns>
-    public bool Execute(IPbsEnvironment env);
+    public IPbsValue Execute(IPbsEnvironment env);
 }

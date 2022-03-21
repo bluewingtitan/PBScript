@@ -1,308 +1,193 @@
-﻿using System.Data;
-using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
+﻿using System.Text.RegularExpressions;
 using PBScript.Interfaces;
+using PBScript.ProgramElements;
 
 namespace PBScript.Environment;
 
-public class VariableObject : IPbsObject
+public class VariableObject : ObjectBase
 {
-    /// <summary>
-    /// Experimental: CSharpScript is quite expensive on performance (as it compiles and executes as C#), but *might* work
-    /// </summary>
-    private const bool UseCSharpScript = false;
-    public object Value { get; private set; }
-    public VariableType Type { get; private set; }
+    public IPbsValue Value { get; private set; }
+    public VariableType ValueType => Value.ReturnType;
 
-        
-    private delegate bool CommandDelegate(string parameter);
-    private readonly Dictionary<string, CommandDelegate> _commands = new Dictionary<string, CommandDelegate>();
-
-    public VariableObject(object value, VariableType type)
+    public VariableObject()
     {
-        Value = value;
-        Type = type;
+        Value = new PbsValue((object?) null, true);
 
-        _commands["="] = AssignValue;
-        _commands["+="] = AddValue;
-        _commands["-="] = RemoveValue;
-        _commands["*="] = MultiplyValue;
-        _commands["/="] = DivideValue;
-        _commands["++"] = PlusPlusValue;
-        _commands["--"] = MinusMinusValue;
-
-        _commands["=="] = Equals;
-        _commands[">"] = BiggerThen;
-        _commands["<"] = SmallerThen;
+        // TODO: Register all methods!
+        Register("set", AssignValue);
+        Register("=", AssignValue);
+        Register("add", AddValue);
+        Register("+=", AddValue);
+        Register("remove", RemoveValue);
+        Register("-=", RemoveValue);
+        Register("rmv", RemoveValue);
+        Register("divide", DivideValue);
+        Register("/=", DivideValue);
+        Register("div", DivideValue);
+        Register("multiply", DivideValue);
+        Register("mtp", MultiplyValue);
+        Register("*=", MultiplyValue);
+        Register("ply", MultiplyValue);
+        Register("up", PlusPlusValue);
+        Register("++", PlusPlusValue);
+        Register("down", MinusMinusValue);
+        Register("--", MinusMinusValue);
     }
 
     #region Actions
-        
-    private bool SmallerThen(string args)
-    {
-        args = args.Trim().Replace("\\%"," ");
-        if (IsEquation(args) && Type != VariableType.String)
-        {
-            var value = ResolveNumberCalculation(args);
 
-            return (double) Value < value;
-        }
-        else
-        {
-            return args.Contains((string) Value);
-        }
-    }
-        
-    private bool BiggerThen(string args)
+    private IPbsValue AssignValue(string args, IPbsEnvironment env)
     {
-        args = args.Trim().Replace("\\%"," ");
-        if (IsEquation(args) && Type != VariableType.String)
-        {
-            var value = ResolveNumberCalculation(args);
+        Value = new PbsAction($"({args})").Execute(env);
+        return PbsValue.True;
+    }
+    private IPbsValue AddValue(string args, IPbsEnvironment env)
+    {
+        var addV = new PbsAction($"({args})").Execute(env);
 
-            return (double) Value > value;
-        }
-        else
-        {
-            return ((string) Value).Contains(args);
-        }
-    }
-        
-    private bool Equals(string args)
-    {
-        args = args.Trim().Replace("\\%"," ");
-        if (IsEquation(args) && Type != VariableType.String)
-        {
-            var value = ResolveNumberCalculation(args);
+        if (addV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
+            return PbsValue.False;
 
-            return Math.Abs(((double) Value) - value) < 0.01;
-        }
-        else
+        switch (addV.ReturnType)
         {
-            return ((string) Value).Equals(args);
-        }
-    }
-        
-        
-    private bool AssignValue(string args)
-    {
-        args = args.Trim().Replace("\\%"," ");
-        if (IsEquation(args))
-        {
-            Value = ResolveNumberCalculation(args);
-            Type = VariableType.Number;
-        }
-        else
-        {
-            Value = args;
-            Type = VariableType.String;
-        }
+            case VariableType.Number:
+                var v = Value.NumberValue ?? 0;
+                var v2 = addV.NumberValue ?? 0;
+
+                Value.SetObjectValue(v + v2);
+                break;
             
-        return true;
-    }
-    private bool AddValue(string args)
-    {
-        args = args.Trim().Replace("\\%"," ");
-        if (IsEquation(args) && Type != VariableType.String)
-        {
-            var newVal = ResolveNumberCalculation(args);
-                
-            if(Type == VariableType.Undefined)
-            {
-                Value = newVal;
-                Type = VariableType.Number;
-            }
-            else
-            {
-                var typedVal = (double)Value;
-                Value = typedVal + newVal;
-            }
+            case VariableType.String:
+                var s = Value.StringValue ?? "";
+                var s2 = addV.StringValue ?? "";
+
+                Value.SetObjectValue(s + s2);
+                break;
+
+            default:
+                return PbsValue.False;
         }
-        else
-        {
-            
-            
-            if (Type == VariableType.Undefined)
-            {
-                Value = args;
-                Type = VariableType.String;
-            }
-            else
-            {
-                var typedVal = (string)Value;
-                Value = typedVal + args;
-            }
-        }
-        return true;
+        return PbsValue.True;
     }
     
-    private bool DivideValue(string args)
+    private IPbsValue RemoveValue(string args, IPbsEnvironment env)
     {
-        args = args.Trim();
-        if (!IsEquation(args) || Type == VariableType.String) return false;
-        var newVal = ResolveNumberCalculation(args);
+        var rV = new PbsAction($"({args})").Execute(env);
 
-        // no division by 0!
-        if (newVal == 0)
-            return false;
+        if (rV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
+            return PbsValue.False;
+
+        switch (rV.ReturnType)
+        {
+            case VariableType.Number:
+                var v = Value.NumberValue ?? 0;
+                var v2 = rV.NumberValue ?? 0;
+
+                Value.SetObjectValue(v - v2);
+                break;
+            default:
+                return PbsValue.False;
+        }
+        return PbsValue.True;
+    }
+    
+    private IPbsValue DivideValue(string args, IPbsEnvironment env)
+    {
+        var dV = new PbsAction($"({args})").Execute(env);
+
+        if (dV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
+            return PbsValue.False;
+
+        switch (dV.ReturnType)
+        {
+            case VariableType.Number:
+                var v = Value.NumberValue ?? 0;
+                var v2 = dV.NumberValue ?? 0.000000001d;
+                
+                if (v2==0)
+                {
+                    v2 = 0.000000001d;
+                }
+                
+                Value.SetObjectValue(v / v2);
+                break;
+            default:
+                return PbsValue.False;
+        }
+        return PbsValue.True;
+    }
+    
+    private IPbsValue MultiplyValue(string args, IPbsEnvironment env)
+    {
+        var dV = new PbsAction($"({args})").Execute(env);
+
+        if (dV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
+            return PbsValue.False;
+
+        switch (dV.ReturnType)
+        {
+            case VariableType.Number:
+                var v = Value.NumberValue ?? 0;
+                var v2 = dV.NumberValue ?? 0;
+                
+                Value.SetObjectValue(v * v2);
+                break;
+            default:
+                return PbsValue.False;
+        }
+        return PbsValue.True;
+    }
+
+    private IPbsValue PlusPlusValue(string args, IPbsEnvironment env)
+    {
+        if (ValueType is VariableType.String or VariableType.Boolean)
+            return PbsValue.False;
+
+        var v = Value.NumberValue??0;
+        Value.SetObjectValue(v+1);
         
-        if(Type == VariableType.Undefined)
-        {
-            // as undefined is handled as 0 and 0/x is still always 0.
-            Value = 0;
-            Type = VariableType.Number;
-        }
-        else
-        {
-            var typedVal = (double)Value;
-            Value = typedVal / newVal;
-        }
-            
-        return true;
+        return PbsValue.True;
     }
-    
-    private bool MultiplyValue(string args)
+    private IPbsValue MinusMinusValue(string args, IPbsEnvironment env)
     {
-        args = args.Trim();
-        if (!IsEquation(args) || Type == VariableType.String) return false;
-        var newVal = ResolveNumberCalculation(args);
-                
-        if(Type == VariableType.Undefined)
-        {
-            // as undefined is handled as 0 and 0*x is still always 0.
-            Value = 0;
-            Type = VariableType.Number;
-        }
-        else
-        {
-            var typedVal = (double)Value;
-            Value = typedVal * newVal;
-        }
-            
-        return true;
-    }
-    
-    private bool RemoveValue(string args)
-    {
-        args = args.Trim();
-        if (!IsEquation(args) || Type == VariableType.String) return false;
-        var newVal = ResolveNumberCalculation(args);
-                
-        if(Type == VariableType.Undefined)
-        {
-            Value = -newVal;
-            Type = VariableType.Number;
-        }
-        else
-        {
-            var typedVal = (double)Value;
-            Value = typedVal - newVal;
-        }
-            
-        return true;
-    }
-    private bool PlusPlusValue(string args)
-    {
-        if (Type == VariableType.String) return false;
-            
-        if(Type == VariableType.Undefined)
-        {
-            Value = 1;
-            Type = VariableType.Number;
-        }
-        else
-        {
-            var typedVal = (double)Value;
-            Value = typedVal + 1;
-        }
-            
-        return true;
-    }
-    private bool MinusMinusValue(string args)
-    {
-        if (Type == VariableType.String) return false;
-            
-        if(Type == VariableType.Undefined)
-        {
-            Value = -1;
-            Type = VariableType.Number;
-        }
-        else
-        {
-            var typedVal = (double)Value;
-            Value = typedVal - 1;
-        }
-            
-        return true;
+        if (ValueType is VariableType.String or VariableType.Boolean)
+            return PbsValue.False;
+
+        var v = Value.NumberValue??0;
+        Value.SetObjectValue(v-1);
+        
+        return PbsValue.True;
     }
         
     #endregion
 
-    public string GetStringValue()
+    public override string GetDocumentation()
     {
-        return Value.ToString();
-    }
-        
-
-    #region Helpers
-
-    private static double ResolveNumberCalculation(string part)
-    {
-        if (UseCSharpScript)
-        {
-            var v = CSharpScript.EvaluateAsync<double>(part).Result;
-            return v;
-        }
-            
-        var dt = new DataTable();
-        var value = dt.Compute(part, "").ToString();
-        return string.IsNullOrEmpty(value) ? 0f : double.Parse(value);
+        return "The default holder of different values.";
     }
 
-    private static bool IsEquation(string args) =>
-        Regex.Matches(args, "[A-Za-z]").Count < 1 && Regex.IsMatch(args, @"\d");
-
-    #endregion
-        
-    public bool ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public override string GetStringValue()
     {
-        // guarantee spaces around first number to allow for things like x-=1
-        var first = true;
-        var fullCmd = $"{command} {parameter ?? ""}";
-        var parts = Regex.Replace(fullCmd, @"(\d+(\.\d+)?)|(\.\d+)", match =>
-        {
-            if (!first)
-                return match.Value;
-
-            first = false;
-            
-            var result = match.Value;
-            if (!char.IsWhiteSpace(fullCmd[match.Index - 1]))
-            {
-                result = " " + result;
-            }
-
-            var lastChar = match.Index + match.Length;
-            if (fullCmd.Length <= lastChar) return result;
-            
-            if (!char.IsWhiteSpace(fullCmd[lastChar]))
-            {
-                result = result + "";
-            }
-
-            return result;
-        }).Split(" ",2);
-            
-        command = parts[0].Trim();
-        parameter = parts[1].Trim();
-            
-        return _commands.ContainsKey(command) && _commands[command](parameter);
+        return Value.AsString();
     }
+
+    protected override IPbsValue DefaultAction(string param)
+    {
+        return Value;
+    }
+    
+    protected override bool Is(string param)
+    {
+        return Value.AsString().Trim().Equals(param.Trim());
+    }
+
 }
 
 public enum VariableType
 {
+    Boolean,
     Number,
     String,
-    Undefined,
+    Unsupported,
+    Null,
 }

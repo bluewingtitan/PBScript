@@ -8,7 +8,7 @@ public class IfElseTest: TestBase
 // counter will count every time a if expression is true
 var x = 0
 
-if $x!=$counter // should be false false
+if $x=$counter // should be false
     counter
 end
 // x should still be 0 now.

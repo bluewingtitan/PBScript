@@ -19,7 +19,7 @@ public class PbsEnvironment: IPbsEnvironment
     private readonly Dictionary<string, IPbsRepository.ObjectCreatorDelegate> _creatorDelegates =
         new Dictionary<string, IPbsRepository.ObjectCreatorDelegate>();
 
-    public PbsEnvironment(IPbsRepository[] repositories = null, bool useDefaultRepo = true)
+    public PbsEnvironment(IPbsRepository[]? repositories = null, bool useDefaultRepo = true)
     {
         if (repositories != null)
         {

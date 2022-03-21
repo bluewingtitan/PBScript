@@ -1,3 +1,4 @@
+using PBScript.Environment;
 using PBScript.Exception;
 using PBScript.Interfaces;
 
@@ -18,8 +19,9 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
             LastResult = true;
             return BlockEndLineIndex;
         }
-        
-        LastResult = _metaAction.Execute(env);
+
+        var r = _metaAction?.Execute(env);
+        LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
 
         if (LastResult)
             return LineIndex + 1;

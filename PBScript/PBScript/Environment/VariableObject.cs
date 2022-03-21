@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using PBScript.Interfaces;
+﻿using PBScript.Interfaces;
 using PBScript.ProgramElements;
 
 namespace PBScript.Environment;
@@ -11,7 +10,7 @@ public class VariableObject : ObjectBase
 
     public VariableObject()
     {
-        Value = new PbsValue((object?) null, true);
+        Value = new PbsValue((object?) null);
 
         // TODO: Register all methods!
         Register("set", AssignValue);

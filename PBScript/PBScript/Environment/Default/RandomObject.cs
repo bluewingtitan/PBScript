@@ -22,7 +22,7 @@ public class RandomObject: ObjectBase
 
     protected override IPbsValue DefaultAction(string param)
     {
-        return new PbsValue(NextBoolean(), false);
+        return new PbsValue(NextBoolean());
     }
 
     private bool NextBoolean()

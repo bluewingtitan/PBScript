@@ -87,58 +87,54 @@ public interface IPbsValue
 
 public class PbsValue : IPbsValue
 {
-    public static IPbsValue Null = new PbsValue(false);
-    public static IPbsValue True = new PbsValue(true, false);
-    public static IPbsValue False = new PbsValue(false, false);
+    public static IPbsValue Null = new PbsValue().Lock();
+    public static IPbsValue True = new PbsValue(true).Lock();
+    public static IPbsValue False = new PbsValue(false).Lock();
     
     public object? ObjectValue { get; protected set; }
+    private bool _isLocked = false;
 
-    /// <summary>
-    /// Whether this object's value may be changed with this.SetObjectValue()
-    /// </summary>
-    public bool Unlocked => true;
+    public IPbsValue Lock()
+    {
+        _isLocked = true;
+        return this;
+    }
 
-    private readonly bool _unlocked;
 
     private readonly IPbsValue _asValue;
 
-    public PbsValue(bool unlocked)
+    public PbsValue()
     {
         if(PbsInterpreter.Log) Console.WriteLine("created: " + "null");
         ObjectValue = null;
         _asValue = this;
-        _unlocked = unlocked;
     }
     
-    public PbsValue(string objectValue, bool unlocked = false)
+    public PbsValue(string objectValue)
     {
         if(PbsInterpreter.Log) Console.WriteLine("created: s." + objectValue);
         ObjectValue = objectValue;
         _asValue = this;
-        _unlocked = unlocked;
     }
 
-    public PbsValue(double objectValue, bool unlocked = false)
+    public PbsValue(double objectValue)
     {
         if(PbsInterpreter.Log) Console.WriteLine("created: d." + objectValue);
         ObjectValue = objectValue;
         _asValue = this;
-        _unlocked = unlocked;
     }
     
-    public PbsValue(bool objectValue, bool unlocked = false)
+    public PbsValue(bool objectValue)
     {
         if(PbsInterpreter.Log) Console.WriteLine("created: b." + objectValue);
         ObjectValue = objectValue;
         _asValue = this;
-        _unlocked = unlocked;
     }
     
-    public PbsValue(object? objectValue, bool unlocked = false)
+    public PbsValue(object? objectValue)
     {
         if(PbsInterpreter.Log) Console.WriteLine("created: o." + (objectValue?.ToString()?? "null"));
         _asValue = this;
-        _unlocked = unlocked;
 
         if (objectValue == null)
         {
@@ -169,10 +165,8 @@ public class PbsValue : IPbsValue
 
     public void SetObjectValue(string newValue)
     {
-        if (!Unlocked)
-        {
+        if (_isLocked)
             return;
-        }
         
         if(PbsInterpreter.Log) if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
         
@@ -181,20 +175,18 @@ public class PbsValue : IPbsValue
     
     public void SetObjectValue(double newValue)
     {
-        if (!Unlocked)
-        {
+        if (_isLocked)
             return;
-        }
+
         if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
         ObjectValue = newValue;
     }
     
     public void SetObjectValue(bool newValue)
     {
-        if (!Unlocked)
-        {
+        if (_isLocked)
             return;
-        }
+
         if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
         ObjectValue = newValue;
     }

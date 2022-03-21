@@ -11,8 +11,8 @@ public abstract class ObjectBase: IPbsObject
 
     public ObjectBase()
     {
-        Register("is", (s,e) => new PbsValue(Is(s), false));
-        Register("isnot", (s,e) => new PbsValue(!Is(s), false));
+        Register("is", (s,e) => new PbsValue(Is(s)));
+        Register("isnot", (s,e) => new PbsValue(!Is(s)));
     }
 
     protected abstract bool Is(string param);

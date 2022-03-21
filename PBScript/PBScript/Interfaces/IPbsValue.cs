@@ -69,11 +69,11 @@ public interface IPbsValue
         var s = "";
         if (StringValue != null)
         {
-            s= $" \"{StringValue}\"";
+            s= $"\"{StringValue}\"";
         }
         else
         {
-            s= " " + (ObjectValue?.ToString() ?? "false");
+            s= (ObjectValue?.ToString() ?? "false");
         }
 
         

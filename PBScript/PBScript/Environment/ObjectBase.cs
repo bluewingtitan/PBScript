@@ -28,8 +28,6 @@ public abstract class ObjectBase: IPbsObject
 
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {
-        // guarantee spaces around first number to allow for things like x-=1
-        var first = true;
         var fullCmd = $"{command} {parameter ?? ""}";
         
         if (PbsInterpreter.Log)
@@ -37,32 +35,8 @@ public abstract class ObjectBase: IPbsObject
             env.Log(GetType().Name, $"run '{fullCmd}'");
         }
         
-        var parts = Regex.Replace(fullCmd, @"(\d+(\.\d+)?)|(\.\d+)", match =>
-        {
-            if (!first)
-                return match.Value;
-
-            first = false;
-            
-            var result = match.Value;
-            if (!char.IsWhiteSpace(fullCmd[match.Index - 1]))
-            {
-                result = " " + result;
-            }
-
-            var lastChar = match.Index + match.Length;
-            if (fullCmd.Length <= lastChar) return result;
-            
-            if (!char.IsWhiteSpace(fullCmd[lastChar]))
-            {
-                result = result + "";
-            }
-
-            return result;
-        }).Split(" ",2);
-            
-        command = parts[0].Trim();
-        parameter = parts[1].Trim();
+        command = command.Trim();
+        parameter = parameter?.Trim() ?? "0";
             
         return _commands.ContainsKey(command)? _commands[command](parameter, env) : DefaultAction(parameter);
     }

@@ -8,8 +8,8 @@ public class PbsDefaultRepository: IPbsRepository
     {
         return new Dictionary<string, IPbsRepository.ObjectCreatorDelegate>()
         {
-            {"debug", () => new DebugObject()},
-            {"random", () => new RandomObject()},
+            {"pbs/debug", () => new IPbsObject[] {new DebugObject()}},
+            {"pbs/random", () => new IPbsObject[] {new RandomObject()}},
         };
     }
 }

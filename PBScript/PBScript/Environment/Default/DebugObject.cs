@@ -4,6 +4,8 @@ namespace PBScript.Environment.Default;
 
 public class DebugObject: IPbsObject
 {
+    public string ObjectName => "debug";
+
     public string GetDocumentation()
     {
         return @"Offers basic debug functionality.

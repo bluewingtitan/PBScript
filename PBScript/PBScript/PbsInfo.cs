@@ -10,6 +10,6 @@ public static class PbsInfo
     
     public const int MajorVersion = 0;
     public const int MinorVersion = 5;
-    public const int SubMinorVersion = 0;
-    public const int PatchVersion = 220321;
+    public const int SubMinorVersion = 1;
+    public const string PatchVersion = "220322a";
 }

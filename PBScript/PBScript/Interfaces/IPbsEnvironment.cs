@@ -4,7 +4,7 @@ public interface IPbsEnvironment
 {
     public void Log(string elementName, string message);
     public IPbsObject? GetObject(string key);
-    public void RegisterObject(string key, IPbsObject pbsObject, bool @override = false);
+    public void RegisterObject(IPbsObject pbsObject, bool @override = false);
     public void DeregisterObject(IPbsObject pbsObject);
 
     /// <summary>

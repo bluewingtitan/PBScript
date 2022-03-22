@@ -18,7 +18,7 @@ public class VariableElement: ElementBase
         {
             env.Log("var " + _varName, "register ");
         }
-        env.RegisterObject(_varName, new VariableObject(), true);
+        env.RegisterObject(new VariableObject(_varName), true);
 
         if (PbsInterpreter.Log)
         {

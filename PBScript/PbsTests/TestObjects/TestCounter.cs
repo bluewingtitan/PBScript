@@ -7,6 +7,7 @@ namespace PbsTexts.TestObjects;
 /// </summary>
 public class TestCounter: IPbsObject
 {
+    public string ObjectName => "counter";
     public int Counter { get; private set; }
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {

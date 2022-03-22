@@ -6,7 +6,7 @@ namespace PBScript.ProgramElements;
 
 public class RequestElement: ElementBase
 {
-    public const string VariableRegex = @"^[a-zA-Z]+$";
+    public const string RequestRegex = @"^[a-zA-Z\/\-]+$";
     private string? _toRequest;
     public override string Token { get; protected set; } = "request";
     public override int Execute(IPbsEnvironment env)
@@ -19,7 +19,7 @@ public class RequestElement: ElementBase
 
     public override bool CheckValid()
     {
-        if (string.IsNullOrEmpty(_toRequest) || !Regex.IsMatch(_toRequest, VariableRegex))
+        if (string.IsNullOrEmpty(_toRequest) || !Regex.IsMatch(_toRequest, RequestRegex))
         {
             throw new InvalidRequestException(LineText, SourceCodeLineNumber);
         }

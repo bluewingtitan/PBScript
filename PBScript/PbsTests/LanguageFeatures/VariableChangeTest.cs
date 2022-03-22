@@ -15,8 +15,8 @@ public class VariableChangeTest: TestBase
     private const string StringAppendResult = @"This is a string! And this is appended!";
     
     protected override string Code => $@"var {DoubleVarName} = {IntVarInitValue}
-    {DoubleVarName}+={IntVarInitValue} // => 10
-{DoubleVarName}*=2 // => 20
+    {DoubleVarName} += {IntVarInitValue} // => 10
+{DoubleVarName} *= 2 // => 20
 var {StringVarName} = {StringVarInit}
 {StringVarName} += {StringAppend}
 ";

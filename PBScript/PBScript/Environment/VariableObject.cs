@@ -8,8 +8,9 @@ public class VariableObject : ObjectBase
     public IPbsValue Value { get; private set; }
     public VariableType ValueType => Value.ReturnType;
 
-    public VariableObject()
+    public VariableObject(string objectName)
     {
+        ObjectName = objectName;
         Value = new PbsValue((object?) null);
 
         // TODO: Register all methods!
@@ -164,6 +165,8 @@ public class VariableObject : ObjectBase
     {
         return "The default holder of different values.";
     }
+
+    public override string ObjectName { get; }
 
     public override string GetStringValue()
     {

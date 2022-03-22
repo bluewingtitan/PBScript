@@ -14,6 +14,7 @@ namespace PBScript.Environment.Default;
 /// </summary>
 public class RandomObject: ObjectBase
 {
+    public override string ObjectName => "random";
     private readonly Random _r = new Random();
     protected override bool Is(string param)
     {

@@ -6,6 +6,8 @@ public interface IPbsObject
     {
         return "No documentation supplied";
     }
+    
+    public string ObjectName { get; }
         
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env);
 

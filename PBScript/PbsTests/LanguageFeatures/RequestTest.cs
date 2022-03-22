@@ -5,8 +5,8 @@ namespace PbsTexts.LanguageFeatures;
 public class RequestTest: TestBase
 {
     protected override string Code => @"//comment
-request debug
-request random";
+request pbs/debug
+request pbs/random";
 
     [Test]
     public void Test_RequestedObjectsAttached()

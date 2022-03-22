@@ -71,7 +71,7 @@ public class PbsAction: IPbsAction
                 {
                     if (PbsInterpreter.Log)
                     {
-                        env.Log(_text, "is value expression");
+                        env.Log("action<" + _text + ">", "is value expression");
                     }
                     
                     var str = _text.EnrichString(env);
@@ -106,7 +106,7 @@ public class PbsAction: IPbsAction
                     
                     if (PbsInterpreter.Log)
                     {
-                        env.Log(_text, "-> " + newStr);
+                        env.Log("action<" + _text + ">", "-> " + newStr);
                     }
                     
                     try
@@ -119,7 +119,7 @@ public class PbsAction: IPbsAction
                         
                         if (PbsInterpreter.Log)
                         {
-                            env.Log(_text, "==> " + (r.ObjectValue?.ToString()??"null"));
+                            env.Log("action<" + _text + ">", "==> " + (r.ObjectValue?.ToString()??"null"));
                         }
 
                         return r;
@@ -134,7 +134,7 @@ public class PbsAction: IPbsAction
                 
                 if (PbsInterpreter.Log)
                 {
-                    env.Log(_text, "is action expression");
+                    env.Log("action<" + _text + ">", "is action expression");
                 }
                 
                 var obj = env.GetObject(ObjectToken);
@@ -149,7 +149,7 @@ public class PbsAction: IPbsAction
                 value = PbsValue.Null;
             }
             
-            if(PbsInterpreter.Log) env.Log(_text, $"=> {value.AsString()}");
+            if(PbsInterpreter.Log) env.Log("action<" + _text + ">", $"=> {value.AsString()}");
             
             return value;
         }

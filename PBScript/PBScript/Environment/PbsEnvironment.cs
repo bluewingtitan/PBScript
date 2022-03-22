@@ -1,6 +1,7 @@
 ﻿
 using PBScript.Environment.Default;
 using PBScript.Interfaces;
+using PBScript.Interpretation;
 
 namespace PBScript.Environment;
 
@@ -48,6 +49,8 @@ public class PbsEnvironment: IPbsEnvironment
 
     public IPbsObject? GetObject(string key)
     {
+        if (PbsInterpreter.Log)
+            Log("Env", $"Get '{key}'");
         key = key.Trim();
 
         if (!_objects.ContainsKey(key))
@@ -56,13 +59,19 @@ public class PbsEnvironment: IPbsEnvironment
         return _objects[key];
     }
 
-    public void RegisterObject(string key, IPbsObject pbsObject, bool @override = false)
+    public void RegisterObject(IPbsObject pbsObject, bool @override = false)
     {
+        
+        var key = pbsObject.ObjectName;
         if (_objects.ContainsKey(key) && !@override)
         {
+            if (PbsInterpreter.Log)
+                Log("Env", $"Didn't register '{pbsObject.ObjectName}': already registered");
             return;
         }
-            
+        if (PbsInterpreter.Log)
+            Log("Env", $"Registered '{pbsObject.ObjectName}'");
+
         _objects[key] = pbsObject;
     }
 
@@ -90,12 +99,21 @@ public class PbsEnvironment: IPbsEnvironment
     public void Request(string requestedObject)
     {
         // only set once!
-        if(_objects.ContainsKey(requestedObject))
-            return;
+        if (PbsInterpreter.Log)
+            Log("Env", $"Requested '{requestedObject}'");
             
         if (_creatorDelegates.ContainsKey(requestedObject))
         {
-            _objects[requestedObject] = _creatorDelegates[requestedObject]();
+            var obj = _creatorDelegates[requestedObject]();
+
+            foreach (var pbsObject in obj)
+            {
+                if(_objects.ContainsKey(pbsObject.ObjectName))
+                    continue;
+                
+                _objects[pbsObject.ObjectName] = pbsObject;
+            }
+            
         }
     }
 }

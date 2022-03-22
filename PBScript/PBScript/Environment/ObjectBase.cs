@@ -25,6 +25,7 @@ public abstract class ObjectBase: IPbsObject
     protected void Register(string name, CommandDelegate command) => _commands[name] = command;
 
     public abstract string GetDocumentation();
+    public abstract string ObjectName { get; }
 
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {

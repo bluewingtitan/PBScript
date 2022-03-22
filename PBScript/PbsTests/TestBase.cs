@@ -22,7 +22,7 @@ public abstract class TestBase
         Assert.DoesNotThrow(() => _program = PbsInterpreter.InterpretProgram(Code));
         Assert.DoesNotThrow(() => _environment = new PbsEnvironment());
         _testCounter = new TestCounter();
-        Assert.DoesNotThrow(() => _environment.RegisterObject(CounterKey, _testCounter, true));
+        Assert.DoesNotThrow(() => _environment.RegisterObject(_testCounter, true));
 
         Test_ProgramRuns();
     }

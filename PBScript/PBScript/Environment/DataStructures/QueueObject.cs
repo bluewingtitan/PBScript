@@ -75,6 +75,6 @@ Use 'newQueue count' to get the amount of items in the queue.";
 
     public override string GetStringValue()
     {
-        return Peek("", null).AsString().Replace("\"","");
+        return Peek("", null).AsString();
     }
 }

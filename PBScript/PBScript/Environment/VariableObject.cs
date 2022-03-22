@@ -162,7 +162,7 @@ public class VariableObject : ObjectBase
 
     public override string GetStringValue()
     {
-        return Value.AsString().Replace("\"","");
+        return Value.AsString();
     }
 
     protected override IPbsValue DefaultAction(string param)

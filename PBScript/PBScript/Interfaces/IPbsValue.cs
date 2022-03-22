@@ -73,7 +73,7 @@ public interface IPbsValue
         }
         else
         {
-            s= (ObjectValue?.ToString() ?? "false");
+            s= (ObjectValue?.ToString() ?? "null");
         }
 
         
@@ -136,7 +136,7 @@ public class PbsValue : IPbsValue
         if(PbsInterpreter.Log) Console.WriteLine("created: o." + (objectValue?.ToString()?? "null"));
         _asValue = this;
 
-        if (objectValue == null)
+        if (objectValue is null or "null")
         {
             ObjectValue = null;
             return;

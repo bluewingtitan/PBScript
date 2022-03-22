@@ -1,13 +1,16 @@
 using System.Text.RegularExpressions;
 using PBScript.Interfaces;
 using PBScript.Interpretation;
+using PBScript.ProgramElements;
 
 namespace PBScript.Environment;
 
 public abstract class ObjectBase: IPbsObject
 {
     protected delegate IPbsValue CommandDelegate(string parameter, IPbsEnvironment env);
-    private readonly Dictionary<string, CommandDelegate> _commands = new Dictionary<string, CommandDelegate>();
+    private readonly Dictionary<string, CommandDelegate> _commands = new();
+    protected delegate IPbsValue CommandDelegateTyped(IPbsValue value, IPbsEnvironment env);
+    private readonly Dictionary<string, CommandDelegateTyped> _typedCommands = new();
 
     public ObjectBase()
     {
@@ -23,6 +26,7 @@ public abstract class ObjectBase: IPbsObject
     }
 
     protected void Register(string name, CommandDelegate command) => _commands[name] = command;
+    protected void RegisterTyped(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
 
     public abstract string GetDocumentation();
     public abstract string ObjectName { get; }
@@ -38,6 +42,13 @@ public abstract class ObjectBase: IPbsObject
         
         command = command.Trim();
         parameter = parameter?.Trim() ?? "0";
+
+        if (_typedCommands.ContainsKey(command))
+        {
+            var value = new PbsAction($"({parameter})").Execute(env);
+            return _typedCommands[command](value, env);
+        }
+        
             
         return _commands.ContainsKey(command)? _commands[command](parameter, env) : DefaultAction(parameter);
     }

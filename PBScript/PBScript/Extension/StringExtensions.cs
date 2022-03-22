@@ -15,7 +15,7 @@ internal static class StringExtensions
 
             var obj = env.GetObject(objectName);
             
-            return obj?.GetStringValue() ?? " 0 ";
+            return obj?.GetStringValue() ?? PbsValue.Null.AsString();
         });
     }
 }

@@ -14,20 +14,20 @@ public class VariableObject : ObjectBase
         Value = new PbsValue((object?) null);
 
         // TODO: Register all methods!
-        Register("set", AssignValue);
-        Register("=", AssignValue);
-        Register("add", AddValue);
-        Register("+=", AddValue);
-        Register("remove", RemoveValue);
-        Register("-=", RemoveValue);
-        Register("rmv", RemoveValue);
-        Register("divide", DivideValue);
-        Register("/=", DivideValue);
-        Register("div", DivideValue);
-        Register("multiply", DivideValue);
-        Register("mtp", MultiplyValue);
-        Register("*=", MultiplyValue);
-        Register("ply", MultiplyValue);
+        RegisterTyped("set", AssignValue);
+        RegisterTyped("=", AssignValue);
+        RegisterTyped("add", AddValue);
+        RegisterTyped("+=", AddValue);
+        RegisterTyped("remove", RemoveValue);
+        RegisterTyped("-=", RemoveValue);
+        RegisterTyped("rmv", RemoveValue);
+        RegisterTyped("divide", DivideValue);
+        RegisterTyped("/=", DivideValue);
+        RegisterTyped("div", DivideValue);
+        RegisterTyped("multiply", DivideValue);
+        RegisterTyped("mtp", MultiplyValue);
+        RegisterTyped("*=", MultiplyValue);
+        RegisterTyped("ply", MultiplyValue);
         Register("up", PlusPlusValue);
         Register("++", PlusPlusValue);
         Register("down", MinusMinusValue);
@@ -36,15 +36,13 @@ public class VariableObject : ObjectBase
 
     #region Actions
 
-    private IPbsValue AssignValue(string args, IPbsEnvironment env)
+    private IPbsValue AssignValue(IPbsValue v, IPbsEnvironment env)
     {
-        Value = new PbsAction($"({args})").Execute(env);
+        Value = v;
         return PbsValue.True;
     }
-    private IPbsValue AddValue(string args, IPbsEnvironment env)
+    private IPbsValue AddValue(IPbsValue addV, IPbsEnvironment env)
     {
-        var addV = new PbsAction($"({args})").Execute(env);
-
         if (addV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
             return PbsValue.False;
 
@@ -70,10 +68,8 @@ public class VariableObject : ObjectBase
         return PbsValue.True;
     }
     
-    private IPbsValue RemoveValue(string args, IPbsEnvironment env)
+    private IPbsValue RemoveValue(IPbsValue rV, IPbsEnvironment env)
     {
-        var rV = new PbsAction($"({args})").Execute(env);
-
         if (rV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
             return PbsValue.False;
 
@@ -91,10 +87,8 @@ public class VariableObject : ObjectBase
         return PbsValue.True;
     }
     
-    private IPbsValue DivideValue(string args, IPbsEnvironment env)
+    private IPbsValue DivideValue(IPbsValue dV, IPbsEnvironment env)
     {
-        var dV = new PbsAction($"({args})").Execute(env);
-
         if (dV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
             return PbsValue.False;
 
@@ -117,10 +111,8 @@ public class VariableObject : ObjectBase
         return PbsValue.True;
     }
     
-    private IPbsValue MultiplyValue(string args, IPbsEnvironment env)
+    private IPbsValue MultiplyValue(IPbsValue dV, IPbsEnvironment env)
     {
-        var dV = new PbsAction($"({args})").Execute(env);
-
         if (dV.ReturnType != ValueType && ValueType != VariableType.Null && ValueType != VariableType.Unsupported)
             return PbsValue.False;
 

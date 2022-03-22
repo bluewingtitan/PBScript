@@ -12,4 +12,16 @@ public static class PbsInfo
     public const int MinorVersion = 5;
     public const int SubMinorVersion = 2;
     public const string PatchVersion = "220322b";
+
+    /// <summary>
+    /// Feel free to print this somewhere in the project you are using PBScript in to give credit.
+    /// </summary>
+    public static string Credits = 
+@$"Powered by Plant-Based-Script (PBScript) v{VersionCode} by Dominik Mezler/bluewingtitan
+Crafted with love, care and plants.
+
+Presented by Five Thousand Kings (5000K)
+
+PBScript proudly uses Flee by Muhammet Parlak/mparlak to resolve equations.
+";
 }

@@ -15,4 +15,5 @@ I will add general language documentation over time, for now the [wiki](https://
 
 
 # Caution
-The current version of PBScript is feature complete and *somewhat* tested for functionality, but the api may change in the future.
+The current version of PBScript is *mostly* tested for functionality, but the api and functionality may (and propably will) change in the future and there may still be some untested parts.
+

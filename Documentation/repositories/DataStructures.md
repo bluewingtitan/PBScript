@@ -30,7 +30,7 @@ Grants access to stacks and queues.
 
 `queue create $name`Creates and attaches a new queue-object under the name $name (using 'newQueue' as example).
 
-### stack-object `queue create newQueue`
+### queue-object `queue create newQueue`
 
 `newQueue dequeue` Dequeues and returns the front value in the queue.
 

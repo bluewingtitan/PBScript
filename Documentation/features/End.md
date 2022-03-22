@@ -11,5 +11,3 @@ end // <= Closes the block.
 // this code won't be part of the block anymore, as it is AFTER the end
 // that closes the block.
 ```
-
-

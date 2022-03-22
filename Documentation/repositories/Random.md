@@ -8,10 +8,6 @@
 
 ### random `request pbs/random`
 
-#### `random`/`random bool`/`random boolean`
+`random`/`random bool`/`random boolean` Returns a random boolean value (true/false)
 
-Returns a random boolean value (true/false)
-
-#### `random number`/`$random`
-
-Returns a random integer number between 0 (inclusive) and 100 (exclusive)
+ `random number`/`$random` Returns a random integer number between 0 (inclusive) and 100 (exclusive)

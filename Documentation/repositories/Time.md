@@ -10,34 +10,18 @@ If `pbs/time`, `pbs/time/utc` or `pbs/time/local` are requested, all following o
 
 ## Objects `... = pbs/time(/utc;/local)`
 
-### second `request .../second`
+second `request .../second` Represents the second part of the current time.
 
-Represents the second part of the current time.
+minute `request .../minute` Represents the minute part of the current time.
 
-### minute `request .../minute`
+hour `request .../hour` Represents the hour part of the current time.
 
-Represents the minute part of the current time.
+day `request .../day` Represents the day part of the current date (between 1 and 31).
 
-### hour `request .../hour`
+weekday `request .../weekday` Represents the weekday part of the current date (1 for monday, 7 for sunday).
 
-Represents the hour part of the current time.
+dayOfYear `request .../dayOfYear` Represents the dayOfYear part of the current date (between 1 and 366).
 
-### day `request .../day`
+month `request .../month` Represents the month part of the current date (between 1 and 12).
 
-Represents the day part of the current date (between 1 and 31).
-
-### weekday `request .../weekday`
-
-Represents the weekday part of the current date (1 for monday, 7 for sunday).
-
-### dayOfYear `request .../dayOfYear`
-
-Represents the dayOfYear part of the current date (between 1 and 366).
-
-### month `request .../month`
-
-Represents the month part of the current date (between 1 and 12).
-
-### year `request .../second`
-
-Represents the year part of the current date.
+year `request .../second` Represents the year part of the current date.

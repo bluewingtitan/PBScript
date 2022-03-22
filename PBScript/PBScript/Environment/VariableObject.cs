@@ -162,7 +162,7 @@ public class VariableObject : ObjectBase
 
     public override string GetStringValue()
     {
-        return Value.AsString();
+        return Value.AsString().Replace("\"","");
     }
 
     protected override IPbsValue DefaultAction(string param)
@@ -175,7 +175,6 @@ public class VariableObject : ObjectBase
         return ValueType.ToString().ToLower().Trim()
             .Equals(param.ToLower().Trim());
     }
-
 }
 
 public enum VariableType

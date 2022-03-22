@@ -42,7 +42,7 @@ end
     [Test]
     public void Test_CorrectlyCounted()
     {
-        Assert.AreEqual(2, _testCounter.Counter);
+        Assert.AreEqual(2, TestCounter.Counter);
     }
     
     

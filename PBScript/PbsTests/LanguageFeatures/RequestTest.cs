@@ -11,8 +11,8 @@ request pbs/random";
     [Test]
     public void Test_RequestedObjectsAttached()
     {
-        var debug = _environment.GetObject("debug");
-        var random = _environment.GetObject("random");
+        var debug = Environment.GetObject("debug");
+        var random = Environment.GetObject("random");
         
         Assert.NotNull(debug);
         Assert.NotNull(random);

@@ -38,7 +38,7 @@ end
     [Test]
     public void Test_CountedCorrectly()
     {
-        Assert.AreEqual(3, _testCounter.Counter);
+        Assert.AreEqual(3, TestCounter.Counter);
     }
     
 }

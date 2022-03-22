@@ -24,7 +24,7 @@ var {StringVarName} = {StringVarInit}
     [Test]
     public void Test_DoubleVariableChanges()
     {
-        var doubleVar = _environment.GetObject(DoubleVarName) as VariableObject;
+        var doubleVar = Environment.GetObject(DoubleVarName) as VariableObject;
         Assert.NotNull(doubleVar);
         Assert.AreEqual(VariableType.Number, doubleVar.ValueType);
         Assert.NotNull(doubleVar.Value.NumberValue);
@@ -34,7 +34,7 @@ var {StringVarName} = {StringVarInit}
     [Test]
     public void Test_StringAppend()
     {
-        var stringVar = _environment.GetObject(StringVarName) as VariableObject;
+        var stringVar = Environment.GetObject(StringVarName) as VariableObject;
         Assert.NotNull(stringVar);
         Assert.AreEqual(VariableType.String, stringVar.ValueType);
         Assert.False(string.IsNullOrEmpty(stringVar.Value.StringValue));

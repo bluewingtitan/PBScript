@@ -1,6 +1,6 @@
 ﻿using PBScript.Interfaces;
 
-namespace PBScript.Environment.Default;
+namespace PBScript.Environment.Random;
 
 /// <summary>
 /// To create some randomness, this one will create boolean randomness.
@@ -15,7 +15,7 @@ namespace PBScript.Environment.Default;
 public class RandomObject: ObjectBase
 {
     public override string ObjectName => "random";
-    private readonly Random _r = new Random();
+    private readonly System.Random _r = new System.Random();
     protected override bool Is(string param)
     {
         return false;

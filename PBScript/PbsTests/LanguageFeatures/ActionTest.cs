@@ -13,6 +13,6 @@ counter 238312213132test123";
     [Test]
     public void Test_CounterWorked()
     {
-        Assert.AreEqual(4, _testCounter.Counter);
+        Assert.AreEqual(4, TestCounter.Counter);
     }
 }

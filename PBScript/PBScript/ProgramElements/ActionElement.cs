@@ -1,5 +1,6 @@
 using PBScript.Exception;
 using PBScript.Interfaces;
+using PBScript.Interpretation;
 
 namespace PBScript.ProgramElements;
 
@@ -13,17 +14,15 @@ public class ActionElement: ElementBase
     
     public override int Execute(IPbsEnvironment env)
     {
+        if (PbsInterpreter.Log)
+            env.Log(Token, "-------- Start Action --------");
+
         _action?.Execute(env);
         return LineIndex + 1;
     }
 
     public override bool CheckValid()
     {
-        if (_action == null)
-        {
-            throw new InvalidLineException(LineText, SourceCodeLineNumber);
-        }
-        
         return true;
     }
 
@@ -32,12 +31,7 @@ public class ActionElement: ElementBase
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
 
         code = code.Trim();
-        
-        if (code.StartsWith("$"))
-        {
-            code = code.Split("$", 2)[1];
-        }
-        
+
         var a = new PbsAction(code);
         _action = a;
         Token = a.ObjectToken;

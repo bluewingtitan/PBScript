@@ -23,10 +23,13 @@ public abstract class TestBase
     public void Test_ProgramCompiles()
     {
         Assert.DoesNotThrow(() => _program = PbsInterpreter.InterpretProgram(Code));
-        Assert.DoesNotThrow(() => Environment = PbsEnvironment.WithAllDefaultRepositories());
+        Assert.DoesNotThrow(() => Environment = PbsEnvironment.WithAllDefaultRepositories(utcTime: true));
         TestCounter = new TestCounter();
+        Assert.NotNull(TestCounter.GetDocumentation());
+        
         Assert.DoesNotThrow(() => Environment.RegisterObject(TestCounter, true));
         AssertObject = new AssertObject();
+        Assert.NotNull(AssertObject.GetDocumentation());
         Assert.DoesNotThrow(() => Environment.RegisterObject(AssertObject, true));
 
         Test_ProgramRuns();

@@ -32,16 +32,6 @@ public class VariableElement: ElementBase
 
     public override bool CheckValid()
     {
-        if (string.IsNullOrEmpty(_varName) || !Regex.IsMatch(_varName, PbsInterpreter.TokenRegex))
-        {
-            throw new InvalidVariableNameException(LineText, SourceCodeLineNumber);
-        }
-        
-        if (_action == null)
-        {
-            throw new InvalidVariableInitialization(LineText, SourceCodeLineNumber);
-        }
-
         return true;
     }
     
@@ -62,10 +52,14 @@ public class VariableElement: ElementBase
         {
             throw new InvalidVariableInitialization(LineText, SourceCodeLineNumber);
         }
-        
+
         
         var action = new PbsAction(actionCode);
         _action = action;
         _varName = action.ObjectToken;
+        if (actionCode.Replace(" ","").Length < _varName.Length + 2 || action.AlwaysFalse)
+        {
+            throw new InvalidVariableInitialization(LineText, SourceCodeLineNumber);
+        }
     }
 }

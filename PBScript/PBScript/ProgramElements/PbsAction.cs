@@ -8,10 +8,9 @@ namespace PBScript.ProgramElements;
 
 public class PbsAction: IPbsAction
 {
-    
         private readonly ExpressionContext _ctx = new ExpressionContext();
-    
         private readonly bool _alwaysFalse = false;
+        public bool AlwaysFalse => _alwaysFalse;
         public readonly string ObjectToken = "";
         private readonly string _actionToken = "";
         private readonly string _parameter = "";

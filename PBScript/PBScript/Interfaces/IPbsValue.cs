@@ -34,7 +34,7 @@ public interface IPbsValue
                 return b;
             }
 
-            return false;
+            return null;
         }
     }
 
@@ -66,17 +66,10 @@ public interface IPbsValue
 
     public virtual string AsString()
     {
-        var s = "";
-        if (StringValue != null)
-        {
-            s= $"\"{StringValue}\"";
-        }
-        else
-        {
-            s= (ObjectValue?.ToString() ?? "null");
-        }
-
-        
+        var s = StringValue != null
+            ?$"\"{StringValue}\""
+            :(ObjectValue?.ToString() ?? "null");
+       
         if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] got: string <" + s + ">");
 
         return s;
@@ -160,7 +153,7 @@ public class PbsValue : IPbsValue
             return;
         }
 
-        ObjectValue = null;
+        ObjectValue = objectValue;
     }
 
     public void SetObjectValue(string newValue)

@@ -89,10 +89,8 @@ public static class PbsInterpreter
     {
         foreach (var element in elements)
         {
-            if (!element.CheckValid())
-            {
-                throw new InvalidLineException(element.LineText, element.SourceCodeLineNumber);
-            }
+            // Elements throw their own.
+            element.CheckValid();
         }
     }
 

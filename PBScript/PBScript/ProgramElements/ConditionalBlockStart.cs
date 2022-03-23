@@ -21,7 +21,7 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
     
     public override bool CheckValid()
     {
-        if (_metaAction == null)
+        if (_metaAction == null || LineText.Trim().Equals(Token))
         {
             throw new InvalidConditionException(LineText, SourceCodeLineNumber);
         }
@@ -33,14 +33,8 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
     {
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
         var actionCode = "";
-        try
-        {
-            actionCode = code.Split(Token,2)[1].Trim();
-        }
-        catch (System.Exception)
-        {
-            throw new InvalidConditionException(LineText, SourceCodeLineNumber);
-        }
+        
+        actionCode = code.Split(Token,2)[1].Trim();
         
         _metaAction = new PbsAction("(" + actionCode + ")");
     }

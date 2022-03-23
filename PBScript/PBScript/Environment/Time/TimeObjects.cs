@@ -14,7 +14,7 @@ public class MinuteObject: TimeObjectBase
 
 public class HourObject: TimeObjectBase
 {
-    protected override int GetValueFromDateTime(DateTime dt) => dt.Minute;
+    protected override int GetValueFromDateTime(DateTime dt) => dt.Hour;
     public HourObject(bool useUtc) : base(useUtc, "hour") {}
 }
 

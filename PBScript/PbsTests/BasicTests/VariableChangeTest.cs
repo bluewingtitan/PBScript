@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using PBScript.Environment;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 public class VariableChangeTest: TestBase
 {

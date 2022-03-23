@@ -24,24 +24,26 @@ COMMANDS:
                 Console.WriteLine(parameter);
                 break;
             
-            case "trace-on":
+            case "traceOn":
                 PbsInterpreter.Log = true;
                 break;
             
-            case "trace-off":
+            case "traceOff":
                 PbsInterpreter.Log = false;
                 break;
 
 
             case "true":
                 return PbsValue.True;
+            
+            case "":
+            case null:
+                return PbsValue.True;
                 
             default:
-                Console.WriteLine($"debug received command '{command}' with parameter '{parameter}'.");
-                break;
+                return PbsValue.False;
         }
-
-        return PbsValue.False;
+        return PbsValue.True;
     }
         
     public string GetStringValue()

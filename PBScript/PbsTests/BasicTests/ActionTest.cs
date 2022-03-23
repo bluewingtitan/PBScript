@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 public class ActionTest: TestBase
 {

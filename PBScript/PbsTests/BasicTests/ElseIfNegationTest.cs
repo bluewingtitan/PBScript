@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 /// <summary>
 /// ElseIfTest only checks IF the correct blocks get executed.

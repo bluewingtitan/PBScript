@@ -85,6 +85,10 @@ public class PbsEnvironment: IPbsEnvironment
                 }
             }
         }
+        
+        RegisterObject(new StaticValueObject(PbsValue.True, "true"), true);
+        RegisterObject(new StaticValueObject(PbsValue.False, "false"), true);
+        RegisterObject(new StaticValueObject(PbsValue.Null, "null"), true);
     }
 
     public void Log(string elementName, string message)

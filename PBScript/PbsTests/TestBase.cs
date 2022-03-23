@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using PBScript.Environment;
+using PBScript.Environment.Debug;
 using PBScript.Interpretation;
 using PbsTexts.TestObjects;
 #pragma warning disable CS8618
@@ -13,6 +14,7 @@ public abstract class TestBase
     private PbsInterpretationResults _program;
     protected PbsEnvironment Environment;
     protected TestCounter TestCounter;
+    protected AssertObject AssertObject;
 
     private const string CounterKey = "counter";
     
@@ -24,6 +26,8 @@ public abstract class TestBase
         Assert.DoesNotThrow(() => Environment = PbsEnvironment.WithAllDefaultRepositories());
         TestCounter = new TestCounter();
         Assert.DoesNotThrow(() => Environment.RegisterObject(TestCounter, true));
+        AssertObject = new AssertObject();
+        Assert.DoesNotThrow(() => Environment.RegisterObject(AssertObject, true));
 
         Test_ProgramRuns();
     }

@@ -20,4 +20,8 @@
       <ProjectReference Include="..\PBScript\PBScript.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Library\Time" />
+    </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using PBScript.Environment;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 public class WhileTest: TestBase
 {
@@ -19,13 +19,13 @@ end";
     [Test]
     public void Test_CorrectAmountOfLoops()
     {
-        Assert.AreEqual(10, _testCounter.Counter);
+        Assert.AreEqual(10, TestCounter.Counter);
     }
 
     [Test]
     public void Test_VariableCountedToZero()
     {
-        var x1 = _environment.GetObject("x") as VariableObject;
+        var x1 = Environment.GetObject("x") as VariableObject;
         Assert.NotNull(x1);
         Assert.AreEqual(VariableType.Number, x1.ValueType);
         Assert.NotNull(x1.Value.NumberValue);

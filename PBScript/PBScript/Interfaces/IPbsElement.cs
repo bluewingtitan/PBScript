@@ -18,7 +18,7 @@ public interface IPbsElement
     /// May throw errors corresponding to missing things. If just returning false, an InvalidLineException will be thrown.
     /// </summary>
     /// <returns>Valid state (true if valid)</returns>
-    public bool CheckValid();
+    public void ThrowIfNotValid();
 
     /// <summary>
     /// Reads the line into the object
@@ -29,7 +29,6 @@ public interface IPbsElement
 
 public interface IPbsBlockStart: IPbsElement
 {
-    public int BlockEndLineIndex { get; }
     public void RegisterBlockEnd(IPbsBlockEnd blockEnd);
 
     // 
@@ -38,6 +37,5 @@ public interface IPbsBlockStart: IPbsElement
 
 public interface IPbsBlockEnd: IPbsElement
 {
-    public int BlockStartLineIndex { get; }
     public void RegisterBlockStart(IPbsBlockStart blockStart);
 }

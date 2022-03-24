@@ -159,6 +159,7 @@ public class VariableObject : ObjectBase
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => ValueType.ToString();
 
     public override string GetStringValue()
     {
@@ -169,13 +170,6 @@ public class VariableObject : ObjectBase
     {
         return new PbsValue(Value.ObjectValue);
     }
-    
-    protected override bool Is(string param)
-    {
-        return ValueType.ToString().ToLower().Trim()
-            .Equals(param.ToLower().Trim());
-    }
-
 }
 
 public enum VariableType

@@ -2,10 +2,7 @@
 
 public interface IPbsObject
 {
-    public string GetDocumentation()
-    {
-        return "No documentation supplied";
-    }
+    public string GetDocumentation();
     
     public string ObjectName { get; }
         

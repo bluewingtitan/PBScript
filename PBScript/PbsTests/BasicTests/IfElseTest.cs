@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 public class IfElseTest: TestBase
 {
@@ -33,12 +33,18 @@ end
 if $x==0 // should be true => counter == 3
     counter
 end
+
+if $x==10 // should be false => counter == 3
+    counter
+else
+    x++
+end
 ";
 
     [Test]
     public void Test_CountedCorrectly()
     {
-        Assert.AreEqual(3, _testCounter.Counter);
+        Assert.AreEqual(3, TestCounter.Counter);
     }
     
 }

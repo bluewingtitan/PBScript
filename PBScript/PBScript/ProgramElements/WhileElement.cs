@@ -2,5 +2,5 @@ namespace PBScript.ProgramElements;
 
 public class WhileElement: ConditionalBlockStart
 {
-    public override string Token { get; protected set; } = "while";
+    public override string Token { get; } = "while";
 }

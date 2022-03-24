@@ -2,7 +2,7 @@
 
 public interface IPbsRepository
 {
-    public delegate IPbsObject[] ObjectCreatorDelegate();
+    public delegate IPbsObject[] ObjectsCreatorDelegate();
 
-    public Dictionary<string, ObjectCreatorDelegate> GetCreators();
+    public Dictionary<string, ObjectsCreatorDelegate> GetCreators();
 }

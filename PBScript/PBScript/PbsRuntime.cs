@@ -14,21 +14,22 @@ public class PbsRuntime
     public PbsRuntime(IPbsEnvironment environment, PbsInterpretationResults results)
     {
         _environment = environment;
-        _elements = results.Elements;
+        _elements = results.Elements ?? new List<IPbsElement>();
     }
 
 
     public void ExecuteNext()
     {
-        if(IsFinished)
-            return;
-        
-        if (PbsInterpreter.Log)
+        if(!IsFinished)
         {
-            _environment.Log("runtime", "RUN #" + _pointer);
-        }
 
-        _pointer = _elements[_pointer].Execute(_environment);
+            if (PbsInterpreter.Log)
+            {
+                _environment.Log("runtime", "RUN #" + _pointer);
+            }
+
+            _pointer = _elements[_pointer].Execute(_environment);
+        }
     }
 
     public void ExecuteAll()

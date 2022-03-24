@@ -1,6 +1,7 @@
 ﻿using PBScript.Interfaces;
+using PBScript.Interpretation;
 
-namespace PBScript.Environment.Default;
+namespace PBScript.Environment.Debug;
 
 public class DebugObject: IPbsObject
 {
@@ -11,6 +12,7 @@ public class DebugObject: IPbsObject
         return @"Offers basic debug functionality.
 COMMANDS:
     log [parameter(s)] logs a simple string containing all parameters.
+    trace-(on/off) Activates/Deactivates trace mode
     true simply returns true. does nothing else.";
     }
 
@@ -21,20 +23,31 @@ COMMANDS:
             case "log":
                 Console.WriteLine(parameter);
                 break;
-                
+            
+            case "traceOn":
+                PbsInterpreter.Log = true;
+                break;
+            
+            case "traceOff":
+                PbsInterpreter.Log = false;
+                break;
+
+
             case "true":
+                return PbsValue.True;
+            
+            case "":
+            case null:
                 return PbsValue.True;
                 
             default:
-                Console.WriteLine($"debug received command '{command}' with parameter '{parameter}'.");
-                break;
+                return PbsValue.False;
         }
-
-        return PbsValue.False;
+        return PbsValue.True;
     }
         
     public string GetStringValue()
     {
-        return "";
+        return PbsValue.True.AsString();
     }
 }

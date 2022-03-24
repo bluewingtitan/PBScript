@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace PbsTexts.LanguageFeatures;
+namespace PbsTexts.BasicTests;
 
 public class ElseIfTest: TestBase
 {
@@ -31,6 +31,6 @@ end
     [Test]
     public void Test_CorrectlyCounted()
     {
-        Assert.AreEqual(2, _testCounter.Counter);
+        Assert.AreEqual(2, TestCounter.Counter);
     }
 }

@@ -34,7 +34,7 @@ public interface IPbsValue
                 return b;
             }
 
-            return false;
+            return null;
         }
     }
 
@@ -66,18 +66,11 @@ public interface IPbsValue
 
     public virtual string AsString()
     {
-        var s = "";
-        if (StringValue != null)
-        {
-            s= $"\"{StringValue}\"";
-        }
-        else
-        {
-            s= (ObjectValue?.ToString() ?? "null");
-        }
-
-        
-        if(PbsInterpreter.Log) Console.WriteLine("got: " + s);
+        var s = StringValue != null
+            ?$"\"{StringValue}\""
+            :(ObjectValue?.ToString()?.ToLower() ?? "null");
+       
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] got: string <" + s + ">");
 
         return s;
     }
@@ -105,35 +98,35 @@ public class PbsValue : IPbsValue
 
     public PbsValue()
     {
-        if(PbsInterpreter.Log) Console.WriteLine("created: " + "null");
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: <" + "null" + ">");
         ObjectValue = null;
         _asValue = this;
     }
     
     public PbsValue(string objectValue)
     {
-        if(PbsInterpreter.Log) Console.WriteLine("created: s." + objectValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: string <" + (objectValue ?? "null") + ">");
         ObjectValue = objectValue;
         _asValue = this;
     }
 
     public PbsValue(double objectValue)
     {
-        if(PbsInterpreter.Log) Console.WriteLine("created: d." + objectValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: number <" + (objectValue.ToString()?? "null") + ">");
         ObjectValue = objectValue;
         _asValue = this;
     }
     
     public PbsValue(bool objectValue)
     {
-        if(PbsInterpreter.Log) Console.WriteLine("created: b." + objectValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: bool <" + (objectValue.ToString()?? "null") + ">");
         ObjectValue = objectValue;
         _asValue = this;
     }
     
     public PbsValue(object? objectValue)
     {
-        if(PbsInterpreter.Log) Console.WriteLine("created: o." + (objectValue?.ToString()?? "null"));
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: object <" + (objectValue?.ToString()?? "null") + ">");
         _asValue = this;
 
         if (objectValue is null or "null")
@@ -160,7 +153,7 @@ public class PbsValue : IPbsValue
             return;
         }
 
-        ObjectValue = null;
+        ObjectValue = objectValue;
     }
 
     public void SetObjectValue(string newValue)
@@ -168,7 +161,7 @@ public class PbsValue : IPbsValue
         if (_isLocked)
             return;
         
-        if(PbsInterpreter.Log) if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] set value <" + (newValue?.ToString()?? "null") + ">");
         
         ObjectValue = newValue;
     }
@@ -178,7 +171,7 @@ public class PbsValue : IPbsValue
         if (_isLocked)
             return;
 
-        if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] set value <" + (newValue.ToString()?? "null") + ">");
         ObjectValue = newValue;
     }
     
@@ -187,18 +180,10 @@ public class PbsValue : IPbsValue
         if (_isLocked)
             return;
 
-        if(PbsInterpreter.Log) Console.WriteLine("set: " + newValue);
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] set value <" + (newValue.ToString()?? "null") + ">");
         ObjectValue = newValue;
     }
     
     // map class-api to interface-defaults
     public VariableType ReturnType => _asValue.ReturnType;
-    public bool? BooleanValue => _asValue.BooleanValue;
-    public double? NumberValue => _asValue.NumberValue;
-    public string? StringValue => _asValue.StringValue;
-    
-    public override string ToString()
-    {
-        return _asValue.AsString();
-    }
 }

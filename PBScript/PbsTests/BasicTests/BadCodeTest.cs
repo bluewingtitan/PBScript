@@ -67,6 +67,7 @@ elseif x = 10
 end
 ";
         Assert.Throws<InvalidElseTokenException>(() => PbsInterpreter.InterpretProgram(code));
+        Assert.Throws<UnexpectedBlockEndException>(() => new ElseIfElement().ThrowIfNotValid());
     }
     
     

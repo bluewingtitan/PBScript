@@ -31,12 +31,12 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
     
     public override void ThrowIfNotValid()
     {
-        base.ThrowIfNotValid();
-        
         if (_blockStart == null)
         {
             throw new UnexpectedBlockEndException(Token, SourceCodeLineNumber);
         }
+        
+        base.ThrowIfNotValid();
     }
     
     private IPbsBlockStart? _blockStart;

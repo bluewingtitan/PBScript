@@ -14,7 +14,7 @@ public class PbsRuntime
     public PbsRuntime(IPbsEnvironment environment, PbsInterpretationResults results)
     {
         _environment = environment;
-        _elements = results.Elements;
+        _elements = results.Elements ?? new List<IPbsElement>();
     }
 
 

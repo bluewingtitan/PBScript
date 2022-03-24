@@ -10,7 +10,7 @@ namespace PBScript.ProgramElements;
 public class ActionElement: ElementBase
 {
     private IPbsAction? _action;
-    private string _token;
+    private string _token = "";
     public override string Token => _token;
     
     public override int Execute(IPbsEnvironment env)

@@ -7,13 +7,7 @@ It allows for easy injection of special actions a player may use by attaching ob
 
 For a compact documentation of PBScript look into the [Documentation](Documentation/Index.html)
 
-### nuget:
-```sh
-# coming soon, i guess
-```
-
-
 
 # Caution
-The current version of PBScript is *mostly* tested for functionality, but the api and functionality may (and propably will) change in the future and there may still be some untested parts.
+The current version of PBScript is well tested in regards of functionality, but the api, language features, syntax, ... may (and propably will to some extend) change in the future and there may still be some untested parts.
 

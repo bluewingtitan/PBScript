@@ -5,7 +5,7 @@ The name derrives from "Plant Based Script", as it was originally developed for 
 
 It allows for easy injection of special actions a player may use by attaching objects with defined actions to the runtime environment.
 
-I will add general language documentation over time, for now the [wiki](https://github.com/Five-Thousand-Kings/TodoGrow.Wiki/wiki) for the garden game might be the best starting point.
+For a compact documentation of PBScript look into the [Documentation](Documentation/Index.html)
 
 ### nuget:
 ```sh

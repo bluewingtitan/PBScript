@@ -5,12 +5,14 @@ namespace PbsTexts.Library.Debug;
 public class AssertTest: TestBase
 {
     private const string KeyTrueAssert = "trueassert";
+    private const string KeyTrueAssert2 = "trueassert2";
     private const string KeyTrueTrue = "truetrue";
     private const string KeyFalseFalse = "falsefalse";
     private const string KeyNotNullTrue = "notnulltrue";
     private const string KeyNotNullTrue2 = "notnulltrue2";
     private const string KeyNullNull = "nullnull";
     private const string KeyNullNull2 = "nullnull2";
+    private const string KeyAssertInvalidSave = "invalidSave";
     
     // Negative Tests
     private const string KeyNull1 = "null1";
@@ -20,8 +22,14 @@ public class AssertTest: TestBase
     
     protected override string Code => $@"
 request pbs/debug
-assert true assert // assert defaults to true
+assert true $assert // assert defaults to true
 assert save ""{KeyTrueAssert}""
+
+assert true ""$assert"" = ""assert""
+assert save ""{KeyTrueAssert2}""
+
+assert false assert save
+assert save ""{KeyAssertInvalidSave}""
 
 assert true true
 assert save ""{KeyTrueTrue}""
@@ -63,12 +71,14 @@ assert save ""{KeyFalseTrue}""
     public void Test_AssertsWhereTrue()
     {
         Assert.True(AssertObject.Results[KeyTrueAssert]);
+        Assert.True(AssertObject.Results[KeyTrueAssert2]);
         Assert.True(AssertObject.Results[KeyTrueTrue]);
         Assert.True(AssertObject.Results[KeyFalseFalse]);
         Assert.True(AssertObject.Results[KeyNotNullTrue]);
         Assert.True(AssertObject.Results[KeyNotNullTrue2]);
         Assert.True(AssertObject.Results[KeyNullNull]);
         Assert.True(AssertObject.Results[KeyNullNull2]);
+        Assert.True(AssertObject.Results[KeyAssertInvalidSave]);
         
         
         Assert.False(AssertObject.Results[KeyNull1]);

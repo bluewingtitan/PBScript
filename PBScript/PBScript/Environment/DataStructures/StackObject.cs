@@ -52,12 +52,6 @@ public class StackObject: ObjectBase
     }
     
     #endregion
-    
-
-    protected override bool Is(string param)
-    {
-        return param.Contains("stack");
-    }
 
     public override string GetDocumentation()
     {
@@ -72,6 +66,7 @@ Use 'newStack count' to get the amount of items in the stack.";
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => "stack";
 
     public override string GetStringValue()
     {

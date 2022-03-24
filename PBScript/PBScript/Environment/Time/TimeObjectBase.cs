@@ -6,6 +6,7 @@ public abstract class TimeObjectBase: ObjectBase
 {
     
     public override string ObjectName { get; }
+    public override string ObjectType => ObjectName;
     protected abstract int GetValueFromDateTime(DateTime dt);
 
     private int Value => GetValueFromDateTime(_useUtc ? DateTime.UtcNow : DateTime.Now);
@@ -16,21 +17,6 @@ public abstract class TimeObjectBase: ObjectBase
     {
         _useUtc = useUtc;
         ObjectName = objectName;
-    }
-
-    protected override bool Is(string param)
-    {
-        param = param.Replace("\"", "").Trim().Split(" ", 2)[0];
-        
-        if (int.TryParse(param, out var i))
-        {
-            if (i == Value)
-            {
-                return true;
-            }
-        }
-        
-        return false;
     }
 
     public override string GetDocumentation()

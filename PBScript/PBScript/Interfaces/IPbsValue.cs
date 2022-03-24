@@ -68,7 +68,7 @@ public interface IPbsValue
     {
         var s = StringValue != null
             ?$"\"{StringValue}\""
-            :(ObjectValue?.ToString() ?? "null");
+            :(ObjectValue?.ToString()?.ToLower() ?? "null");
        
         if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] got: string <" + s + ">");
 
@@ -98,7 +98,7 @@ public class PbsValue : IPbsValue
 
     public PbsValue()
     {
-        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: string <" + "null" + ">");
+        if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: <" + "null" + ">");
         ObjectValue = null;
         _asValue = this;
     }
@@ -186,12 +186,4 @@ public class PbsValue : IPbsValue
     
     // map class-api to interface-defaults
     public VariableType ReturnType => _asValue.ReturnType;
-    public bool? BooleanValue => _asValue.BooleanValue;
-    public double? NumberValue => _asValue.NumberValue;
-    public string? StringValue => _asValue.StringValue;
-    
-    public override string ToString()
-    {
-        return _asValue.AsString();
-    }
 }

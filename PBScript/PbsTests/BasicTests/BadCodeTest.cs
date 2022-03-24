@@ -51,6 +51,22 @@ end";
         code = @"
 if x = 1";
         Assert.Throws<UnclosedBlockException>(() => PbsInterpreter.InterpretProgram(code));
+
+
+        code = @"
+while x = 1
+else
+end
+";
+        Assert.Throws<InvalidElseTokenException>(() => PbsInterpreter.InterpretProgram(code));
+        
+        
+        code = @"
+while x = 1
+elseif x = 10
+end
+";
+        Assert.Throws<InvalidElseTokenException>(() => PbsInterpreter.InterpretProgram(code));
     }
     
     
@@ -60,6 +76,10 @@ if x = 1";
         var code = @"var x =";
         Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
 
+        code = @"var x";
+        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
+
+        
         code = @"var";
         Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
         
@@ -73,13 +93,13 @@ $x = 10";
 
 
         code = @"var + = 7";
-        TestException(code);
+        TestForException(code);
         code = @"var x = 7
 $x = 10";
-        TestException(code);
+        TestForException(code);
     }
 
-    private void TestException(string code)
+    private void TestForException(string code)
     {
         try
         {
@@ -104,6 +124,18 @@ $x = 10";
         code = @"++var x = 10";
         Assert.Throws<InvalidLineException>(() => PbsInterpreter.InterpretProgram(code));
                                                                                                  Assert.Throws<InvalidLineException>(() => PbsInterpreter.InterpretProgram(code));
+    }
+
+    [Test]
+    public void Test_BadAction()
+    {
+        var action = new PbsAction("");
+        Assert.True(action.AlwaysFalse);
+        Assert.AreEqual(PbsValue.Null, action.Execute(PbsEnvironment.ProductionReady()));
+
+        action = new PbsAction("(true and false)");
+        Assert.False(action.AlwaysFalse);
+        Assert.AreEqual(false, action.Execute(PbsEnvironment.ProductionReady()).BooleanValue);
     }
     
     [Test]

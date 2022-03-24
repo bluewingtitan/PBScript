@@ -15,11 +15,6 @@ public class StaticValueObject: ObjectBase
         return _value;
     }
 
-    protected override bool Is(string param)
-    {
-        return param.Equals(_value.AsString());
-    }
-
     public override string GetDocumentation()
     {
         return
@@ -27,6 +22,7 @@ public class StaticValueObject: ObjectBase
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => _value.ReturnType.ToString();
     private readonly IPbsValue _value;
     public override string GetStringValue()
     {

@@ -10,6 +10,11 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
     
     public override int Execute(IPbsEnvironment env)
     {
+        if (_metaAction == null)
+        {
+            throw new NotProperlyInitializedException(Token);
+        }
+        
         var r = _metaAction?.Execute(env);
         LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
 
@@ -19,14 +24,17 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         return BlockEndLineIndex;
     }
     
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
-        if (_metaAction == null || LineText.Trim().Equals(Token))
+        if (_metaAction == null)
+        {
+            throw new NotProperlyInitializedException(Token);
+        }
+        
+        if (LineText.Trim().Equals(Token))
         {
             throw new InvalidConditionException(LineText, SourceCodeLineNumber);
         }
-        
-        return true;
     }
     
     public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)

@@ -1,5 +1,4 @@
-﻿using PBScript.Environment.Default;
-using PBScript.Interfaces;
+﻿using PBScript.Interfaces;
 
 namespace PBScript.Environment.Debug;
 

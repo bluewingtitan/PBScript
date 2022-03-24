@@ -15,32 +15,27 @@ public class CreatorObject: ObjectBase
         ObjectName = objectName;
         _creator = creator;
 
-        RegisterTyped("create", Create);
+        Register("create", Create);
     }
 
-    private IPbsValue Create(IPbsValue v, IPbsEnvironment env)
+    private IPbsValue Create(string v, IPbsEnvironment env)
     {
-        if (v.StringValue != null)
+        var name =  v.Trim().Split(" ")[0];
+
+        if (!Regex.IsMatch(name, PbsInterpreter.TokenRegex))
         {
-            var name =  v.StringValue.Trim().Split(" ")[0];
-
-            if (!Regex.IsMatch(name, PbsInterpreter.TokenRegex))
-            {
-                return PbsValue.False;
-            }
-
-            var obj = _creator(name);
-            
-            env.RegisterObject(obj, true);
-            return PbsValue.True;
+            return PbsValue.False;
         }
-        
-        return PbsValue.False;
+
+        var obj = _creator(name);
+            
+        env.RegisterObject(obj, true);
+        return PbsValue.True;
     }
 
-    protected override bool Is(string param)
+    protected override IPbsValue DefaultAction(string param)
     {
-        return false;
+        return PbsValue.Null;
     }
 
     public override string GetDocumentation()
@@ -49,8 +44,10 @@ public class CreatorObject: ObjectBase
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => ObjectName + "Creator";
+
     public override string GetStringValue()
     {
-        return "null";
+        return ObjectType;
     }
 }

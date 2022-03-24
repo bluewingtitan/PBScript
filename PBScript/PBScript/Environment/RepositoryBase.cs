@@ -4,7 +4,7 @@ namespace PBScript.Environment;
 
 public abstract class RepositoryBase: IPbsRepository
 {
-    protected readonly string Space;
+    protected readonly string Space = "";
     
     private readonly Dictionary<string, IPbsRepository.ObjectsCreatorDelegate> _creatorDelegates = new();
     public delegate IPbsObject SingleObjectCreatorDelegate();
@@ -14,10 +14,6 @@ public abstract class RepositoryBase: IPbsRepository
         if (!string.IsNullOrEmpty(space) && !string.IsNullOrWhiteSpace(space))
         {
             Space = space + "/";
-        }
-        else
-        {
-            Space = "";
         }
     }
 

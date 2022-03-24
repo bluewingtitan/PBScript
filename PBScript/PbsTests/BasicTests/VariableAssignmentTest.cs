@@ -13,9 +13,12 @@ public class VariableAssignmentTest: TestBase
     private const double X1 = 27;
     private const string X1Name = "x1";
     
-    protected override string Code => $@"var {X1Name} = {X1}
+    protected override string Code => $@"request pbs/debug
+debug traceOn
+var {X1Name} = {X1}
 var {String1Name} = {String1}
-var {StringWithNumbersName} = {StringWithNumbers}";
+var {StringWithNumbersName} = {StringWithNumbers}
+debug traceOff";
 
     [Test]
     public void Test_VariablesAreCorrectlyAssigned()
@@ -38,4 +41,11 @@ var {StringWithNumbersName} = {StringWithNumbers}";
         Assert.False(string.IsNullOrEmpty(stringWithNumbers.Value.StringValue));
         Assert.AreEqual(StringWithNumbers.Replace("\"",""), (string)stringWithNumbers.Value.StringValue);
     }
+
+    [Test]
+    public void Test_VariableHasDocumentation()
+    {
+        Assert.NotNull(Environment.GetObject(StringWithNumbersName)?.GetDocumentation());
+    }
+    
 }

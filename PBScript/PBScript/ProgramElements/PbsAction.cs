@@ -38,12 +38,6 @@ public class PbsAction: IPbsAction
 
             var p1 = actionCode.Split(objectMatches[0].Value,2);
 
-            if (p1.Length < 1)
-            {
-                _alwaysFalse = true;
-                return;
-            }
-            
             ObjectToken = objectMatches[0].Value.Trim();
                 
             var parts = p1[1].Trim().Split(" ",2);
@@ -52,101 +46,93 @@ public class PbsAction: IPbsAction
             _parameter = parts.Length > 1 ? parts[1].Trim() : "";
         }
 
-        private static List<string> ReservedLogicWords = new List<string>()
-        {
-            "and","or","not"
-        };
-
         public IPbsValue Execute(IPbsEnvironment env)
         {
             if (_alwaysFalse)
                 return PbsValue.Null;
 
             IPbsValue value;
-
-            try
+            if (_isValueExpression)
             {
-                if (_isValueExpression)
-                {
-                    if (PbsInterpreter.Log)
-                    {
-                        env.Log("action<" + _text + ">", "is value expression");
-                    }
-                    
-                    var str = _text.EnrichString(env);
-
-                    var parts = str.Split('"');
-
-                    var newStr = "";
-                    
-                    // Handles parts inside/outside of string literals differently.
-                    for (int i = 0; i < parts.Length; i++)
-                    {
-                        if (i%2==0)
-                        {
-                            // we are outside of a string literal!
-                            newStr += Regex.Replace(parts[i], $@"{PbsInterpreter.TokenRegex}([ ]+({PbsInterpreter.TokenRegex}))*", match =>
-                            {
-                                var bMatch = match.Value.ToLower();
-                                if (ReservedLogicWords.Contains(bMatch))
-                                {
-                                    return match.Value;
-                                }
-                                var newA = new PbsAction(match.Value);
-                                var v = newA.Execute(env);
-                                return v.AsString();
-                            }).Replace("=="," = ").Replace("&&"," AND ").Replace("||"," OR ");
-                        }
-                        else
-                        {
-                            newStr += $" \"{parts[i]}\" ";
-                        }
-                    }
-                    
-                    if (PbsInterpreter.Log)
-                    {
-                        env.Log("action<" + _text + ">", "-> " + newStr);
-                    }
-                    
-                    try
-                    {
-                        var expr = _ctx.CompileDynamic(newStr);
-
-                        var result = expr.Evaluate();
-
-                        var r = new PbsValue(result);
-                        
-                        if (PbsInterpreter.Log)
-                        {
-                            env.Log("action<" + _text + ">", "==> " + (r.ObjectValue?.ToString()??"null"));
-                        }
-
-                        return r;
-                    }
-                    catch (System.Exception _)
-                    {
-                        Console.WriteLine(_);
-                        return PbsValue.Null;
-                    }
-                }
-                
-                
                 if (PbsInterpreter.Log)
                 {
-                    env.Log("action<" + _text + ">", "is action expression");
+                    env.Log("action<" + _text + ">", "is value expression");
                 }
-                
-                var obj = env.GetObject(ObjectToken);
-                var enrichedParameter = _parameter.EnrichString(env);
-                var enrichedToken = _actionToken.EnrichString(env);
 
-                value = obj?.ExecuteAction(enrichedToken, enrichedParameter, env) ?? PbsValue.Null;
+                var str = _text.EnrichString(env);
+
+                var parts = str.Split('"');
+
+                var newStr = "";
+                    
+                // Handles parts inside/outside of string literals differently.
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    if (i%2==0)
+                    {
+                        // we are outside of a string literal!
+
+                        var newRaw = new Regex("\\s(and|or|not)\\s", RegexOptions.IgnoreCase).Replace(parts[i],
+                            match => match.Value.Replace("and", "&&")
+                                .Replace("or", "||")
+                                .Replace("not", "!!!"));
+                        
+                        newStr += Regex.Replace(newRaw, $@"{PbsInterpreter.TokenRegex}([ ]+({PbsInterpreter.TokenRegex}))*", match =>
+                        {
+                            var newA = new PbsAction(match.Value);
+                            var v = newA.Execute(env);
+                            return v.AsString();
+                        })
+                            .Replace("=="," = ")
+                            .Replace("&&"," AND ")
+                            .Replace("||"," OR ")
+                            .Replace("!!!"," NOT ");
+                    }
+                    else
+                    {
+                        newStr += $" \"{parts[i]}\" ";
+                    }
+                }
+                    
+                if (PbsInterpreter.Log)
+                {
+                    env.Log("action<" + _text + ">", "-> " + newStr);
+                }
+                    
+                try
+                {
+                    var expr = _ctx.CompileDynamic(newStr);
+
+                    var result = expr.Evaluate();
+
+                    var r = new PbsValue(result);
+                        
+                    if (PbsInterpreter.Log)
+                    {
+                        env.Log("action<" + _text + ">", "==> " + (r.ObjectValue?.ToString()??"null"));
+                    }
+
+                    return r;
+                }
+                catch (System.Exception _)
+                {
+                    Console.WriteLine(_);
+                    return PbsValue.Null;
+                }
             }
-            catch (System.Exception e)
+                
+                
+            if (PbsInterpreter.Log)
             {
-                Console.WriteLine(e);
-                value = PbsValue.Null;
+                env.Log("action<" + _text + ">", "is action expression");
             }
+                
+            var obj = env.GetObject(ObjectToken);
+            var enrichedParameter = _parameter.EnrichString(env);
+            var enrichedToken = _actionToken.EnrichString(env);
+
+            value = obj?.ExecuteAction(enrichedToken, enrichedParameter, env) ?? PbsValue.Null;
+            
             
             if(PbsInterpreter.Log) env.Log("action<" + _text + ">", $"=> {value.AsString()}");
             

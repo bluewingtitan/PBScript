@@ -6,7 +6,7 @@ namespace PBScript.ProgramElements;
 
 public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
 {
-    public override string Token { get; protected set; } = "elseif";
+    public override string Token { get; } = "elseif";
     
     public override int Execute(IPbsEnvironment env)
     {
@@ -29,25 +29,16 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
         return BlockEndLineIndex;
     }
     
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
-        if (!base.CheckValid())
-            return false;
+        base.ThrowIfNotValid();
         
         if (_blockStart == null)
         {
             throw new UnexpectedBlockEndException(Token, SourceCodeLineNumber);
         }
-        
-        if (!_blockStart.Token.Equals("if") && !_blockStart.Token.Equals("elseif"))
-        {
-            throw new InvalidElseTokenException(SourceCodeLineNumber);
-        }
-
-        return true;
     }
     
-    public int BlockStartLineIndex { get; private set; }
     private IPbsBlockStart? _blockStart;
     public void RegisterBlockStart(IPbsBlockStart blockStart)
     {
@@ -57,6 +48,5 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
         }
 
         _blockStart = blockStart;
-        BlockStartLineIndex = blockStart.LineIndex;
     }
 }

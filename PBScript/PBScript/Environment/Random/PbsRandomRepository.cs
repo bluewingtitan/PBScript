@@ -1,4 +1,3 @@
-using PBScript.Environment.Default;
 using PBScript.Interfaces;
 
 namespace PBScript.Environment.Random;

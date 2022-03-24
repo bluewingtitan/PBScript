@@ -52,12 +52,6 @@ public class QueueObject: ObjectBase
     }
     
     #endregion
-    
-
-    protected override bool Is(string param)
-    {
-        return param.Contains("queue");
-    }
 
     public override string GetDocumentation()
     {
@@ -72,6 +66,7 @@ Use 'newQueue count' to get the amount of items in the queue.";
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => "queue";
 
     public override string GetStringValue()
     {

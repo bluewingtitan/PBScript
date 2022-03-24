@@ -22,6 +22,7 @@ public class AssertObject: ObjectBase
     {
         if (v.StringValue == null)
             return PbsValue.False;
+        
         Results[v.StringValue] = _lastResult;
         return PbsValue.True;
     }
@@ -74,13 +75,6 @@ public class AssertObject: ObjectBase
         _lastResult = false;
         return PbsValue.False;
     }
-    
-    
-    protected override bool Is(string param)
-    {
-        return param.Contains("assert");
-    }
-
     protected override IPbsValue DefaultAction(string param)
     {
         return PbsValue.True;
@@ -92,8 +86,9 @@ public class AssertObject: ObjectBase
     }
 
     public override string ObjectName => "assert";
+    public override string ObjectType => "assert";
     public override string GetStringValue()
     {
-        return PbsValue.True.AsString();
+        return ObjectType;
     }
 }

@@ -9,8 +9,8 @@ public struct PbsInterpretationResults
         return new PbsRuntime(environment, this);
     }
     
-    public List<IPbsElement> Elements;
+    public List<IPbsElement>? Elements = null;
 
-    public int TotalLines;
-    public int LinesOfCode;
+    public int TotalLines = 0;
+    public int LinesOfCode = 0;
 }

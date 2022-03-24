@@ -159,6 +159,7 @@ public class VariableObject : ObjectBase
     }
 
     public override string ObjectName { get; }
+    public override string ObjectType => ValueType.ToString();
 
     public override string GetStringValue()
     {
@@ -168,12 +169,6 @@ public class VariableObject : ObjectBase
     protected override IPbsValue DefaultAction(string param)
     {
         return new PbsValue(Value.ObjectValue);
-    }
-    
-    protected override bool Is(string param)
-    {
-        return ValueType.ToString().ToLower().Trim()
-            .Equals(param.ToLower().Trim());
     }
 }
 

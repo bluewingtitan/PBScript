@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using PBScript.Environment.DataStructures;
 using PBScript.Environment.Debug;
-using PBScript.Environment.Default;
 using PBScript.Environment.Random;
 using PBScript.Environment.Time;
 using PBScript.Interfaces;
@@ -110,6 +109,10 @@ public class PbsEnvironment: IPbsEnvironment
 
     public void RegisterObject(IPbsObject pbsObject, bool @override = false)
     {
+        if (pbsObject == null)
+        {
+            return;
+        }
         
         var key = pbsObject.ObjectName;
         if (_objects.ContainsKey(key) && !@override)
@@ -137,10 +140,6 @@ public class PbsEnvironment: IPbsEnvironment
                     break;
                 }
             }
-                
-            if(string.IsNullOrEmpty(k))
-                return;
-
             _objects.Remove(k);
         }
     }

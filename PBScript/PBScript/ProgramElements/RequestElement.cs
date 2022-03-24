@@ -8,23 +8,22 @@ public class RequestElement: ElementBase
 {
     public const string RequestRegex = @"^[a-zA-Z\/\-]+$";
     private string? _toRequest;
-    public override string Token { get; protected set; } = "request";
+    public override string Token { get; } = "request";
     public override int Execute(IPbsEnvironment env)
     {
-        if (!string.IsNullOrEmpty(_toRequest))
-            env.Request(_toRequest);
+        if (string.IsNullOrEmpty(_toRequest))
+            throw new NotProperlyInitializedException(Token);
 
+        env.Request(_toRequest);
         return LineIndex + 1;
     }
 
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
         if (string.IsNullOrEmpty(_toRequest) || !Regex.IsMatch(_toRequest, RequestRegex))
         {
             throw new InvalidRequestException(LineText, SourceCodeLineNumber);
         }
-
-        return true;
     }
 
     public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
@@ -34,7 +33,7 @@ public class RequestElement: ElementBase
         try
         {
             _toRequest = code.Replace(Token, "").Trim().Split(" ",2)[0];
-            CheckValid();
+            ThrowIfNotValid();
         }
         catch (System.Exception)
         {

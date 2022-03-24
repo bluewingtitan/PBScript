@@ -5,12 +5,12 @@ namespace PBScript.ProgramElements;
 
 public class EndElement: ElementBase, IPbsBlockEnd
 {
-    public override string Token { get; protected set; } = "end";
+    public override string Token { get; } = "end";
     
     public override int Execute(IPbsEnvironment env)
     {
         if (_blockStart == null)
-            return LineIndex + 1;
+            throw new UnexpectedBlockEndException(Token, SourceCodeLineNumber);
         
         if (!_blockStart.LastConditionMet())
             return LineIndex + 1;
@@ -25,21 +25,17 @@ public class EndElement: ElementBase, IPbsBlockEnd
         }
     }
 
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
         if (_blockStart == null)
         {
             throw new UnexpectedBlockEndException(Token, SourceCodeLineNumber);
         }
-
-        return true;
     }
 
-    public int BlockStartLineIndex { get; private set; }
     private IPbsBlockStart? _blockStart;
     public void RegisterBlockStart(IPbsBlockStart blockStart)
     {
         _blockStart = blockStart;
-        BlockStartLineIndex = blockStart.LineIndex;
     }
 }

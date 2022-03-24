@@ -3,6 +3,8 @@
 > Creation: v0.6
 > 
 > Last Update: v0.6
+> 
+> Code-Coverage: 100%
 
 Grants access to stacks and queues.
 

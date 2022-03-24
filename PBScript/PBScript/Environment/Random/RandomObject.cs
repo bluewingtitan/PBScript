@@ -15,15 +15,11 @@ namespace PBScript.Environment.Random;
 public class RandomObject: ObjectBase
 {
     public override string ObjectName => "random";
+    public override string ObjectType => "random";
     private readonly System.Random _r = new System.Random();
-    protected override bool Is(string param)
-    {
-        return false;
-    }
 
     public RandomObject()
     {
-        Register("bool", (s, e) => new PbsValue(NextBoolean()));
         Register("boolean", (s, e) => new PbsValue(NextBoolean()));
         Register("number", (s, e) => new PbsValue(NextNumber()));
     }

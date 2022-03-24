@@ -10,20 +10,29 @@ namespace PBScript.ProgramElements;
 public class ActionElement: ElementBase
 {
     private IPbsAction? _action;
-    public override string Token { get; protected set; } = "";
+    private string _token;
+    public override string Token => _token;
     
     public override int Execute(IPbsEnvironment env)
     {
         if (PbsInterpreter.Log)
             env.Log(Token, "-------- Start Action --------");
 
+        if (_action == null)
+        {
+            throw new NotProperlyInitializedException("an action-Element");
+        }
+
         _action?.Execute(env);
         return LineIndex + 1;
     }
 
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
-        return true;
+        if (_action == null)
+        {
+            throw new NotProperlyInitializedException("an action-Element");
+        }
     }
 
     public override void ParseLine(string code, int lineIndex, int sourceCodeLineNumber)
@@ -34,6 +43,6 @@ public class ActionElement: ElementBase
 
         var a = new PbsAction(code);
         _action = a;
-        Token = a.ObjectToken;
+        _token = a.ObjectToken;
     }
 }

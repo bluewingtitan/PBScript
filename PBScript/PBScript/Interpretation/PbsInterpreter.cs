@@ -20,12 +20,12 @@ public static class PbsInterpreter
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         
-        var interpretationResults = new PbsInterpretationResults
-        {
-            TotalLines = Regex.Matches(programText, "\n").Count
-        };
 
         var lines = new List<string>(programText.Split("\n"));
+        var interpretationResults = new PbsInterpretationResults
+        {
+            TotalLines = lines.Count
+        };
 
         var blockStack = new Stack<IPbsBlockStart>();
         var lineList = new List<IPbsElement>();
@@ -90,7 +90,7 @@ public static class PbsInterpreter
         foreach (var element in elements)
         {
             // Elements throw their own.
-            element.CheckValid();
+            element.ThrowIfNotValid();
         }
     }
 

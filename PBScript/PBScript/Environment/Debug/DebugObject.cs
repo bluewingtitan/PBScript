@@ -1,7 +1,7 @@
 ﻿using PBScript.Interfaces;
 using PBScript.Interpretation;
 
-namespace PBScript.Environment.Default;
+namespace PBScript.Environment.Debug;
 
 public class DebugObject: IPbsObject
 {
@@ -48,6 +48,6 @@ COMMANDS:
         
     public string GetStringValue()
     {
-        return "";
+        return PbsValue.True.AsString();
     }
 }

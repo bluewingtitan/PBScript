@@ -33,6 +33,12 @@ end
 if $x==0 // should be true => counter == 3
     counter
 end
+
+if $x==10 // should be false => counter == 3
+    counter
+else
+    x++
+end
 ";
 
     [Test]

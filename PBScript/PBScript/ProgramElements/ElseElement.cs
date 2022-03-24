@@ -5,7 +5,7 @@ namespace PBScript.ProgramElements;
 
 public class ElseElement: ElementBase, IPbsBlockEnd, IPbsBlockStart
 {
-    public override string Token { get; protected set; } = "end";
+    public override string Token { get; } = "end";
     
     public override int Execute(IPbsEnvironment env)
     {
@@ -18,21 +18,14 @@ public class ElseElement: ElementBase, IPbsBlockEnd, IPbsBlockStart
         return BlockEndLineIndex;
     }
 
-    public override bool CheckValid()
+    public override void ThrowIfNotValid()
     {
         if (_blockStart == null)
         {
             throw new UnexpectedBlockEndException(Token, SourceCodeLineNumber);
         }
-        if (!_blockStart.Token.Equals("if") && !_blockStart.Token.Equals("elseif"))
-        {
-            throw new InvalidElseTokenException(SourceCodeLineNumber);
-        }
-
-        return true;
     }
 
-    public int BlockStartLineIndex { get; private set; }
     private IPbsBlockStart? _blockStart;
     public void RegisterBlockStart(IPbsBlockStart blockStart)
     {
@@ -42,7 +35,6 @@ public class ElseElement: ElementBase, IPbsBlockEnd, IPbsBlockStart
         }
 
         _blockStart = blockStart;
-        BlockStartLineIndex = blockStart.LineIndex;
     }
 
     public int BlockEndLineIndex { get; private set; }

@@ -3,8 +3,14 @@
 > Creation: v0.1
 > 
 > Last Update: v0.6.1
+> 
+> Code-Coverage: 100%
 
-Only usable for debug and developement purposes, should not be enabled for production.
+--------
+
+Only to be used for debug- and developement purposes, should not be enabled for production (thus is not included in PbsEnvironment.ProductionReady()).
+
+--------
 
 ## Objects
 

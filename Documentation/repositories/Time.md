@@ -3,6 +3,8 @@
 > Creation: v0.6
 > 
 > Last Update: v0.6
+> 
+> Code-Coverage: 100%
 
 Objects can be requested unter pbs/time/utc/... for utc time, pbs/time/local/... for local time or pbs/time/... to use the default. 
 

@@ -15,29 +15,29 @@ public abstract class ObjectBase: IPbsObject
     public ObjectBase()
     {
         Register("is", (s,e) => new PbsValue(Is(s)));
+        // ReSharper disable once StringLiteralTypo
         Register("isnot", (s,e) => new PbsValue(!Is(s)));
     }
 
-    protected abstract bool Is(string param);
-
-    protected virtual IPbsValue DefaultAction(string param)
+    protected virtual bool Is(string param)
     {
-        return PbsValue.Null;
+        return param?.Trim().ToLower().Equals(ObjectType.ToLower()) ?? false;
     }
+
+    protected abstract IPbsValue DefaultAction(string param);
 
     protected void Register(string name, CommandDelegate command) => _commands[name] = command;
     protected void RegisterTyped(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
 
     public abstract string GetDocumentation();
     public abstract string ObjectName { get; }
+    public abstract string ObjectType { get; }
 
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {
-        var fullCmd = $"{command} {parameter ?? ""}";
-        
         if (PbsInterpreter.Log)
         {
-            env.Log(GetType().Name, $"run '{fullCmd}'");
+            env.Log(GetType().Name, $"run '{command} {parameter ?? ""}'");
         }
         
         command = command.Trim();

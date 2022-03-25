@@ -168,7 +168,7 @@ public class VariableObject : ObjectBase
 
     protected override IPbsValue DefaultAction(string param)
     {
-        return new PbsValue(Value.ObjectValue);
+        return Value;
     }
 }
 

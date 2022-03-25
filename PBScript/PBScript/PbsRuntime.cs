@@ -10,6 +10,7 @@ public class PbsRuntime
     private int _pointer = 0;
     private readonly List<IPbsElement> _elements;
     private readonly IPbsEnvironment _environment;
+    public long Iterations { get; private set; } = 0;
 
     public PbsRuntime(IPbsEnvironment environment, PbsInterpretationResults results)
     {
@@ -22,6 +23,7 @@ public class PbsRuntime
     {
         if(!IsFinished)
         {
+            Iterations++;
 
             if (PbsInterpreter.Log)
             {

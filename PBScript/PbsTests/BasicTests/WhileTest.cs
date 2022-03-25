@@ -8,6 +8,8 @@ public class WhileTest: TestBase
 {
     protected override string Code => $@"// creates a simple while loop that counts down from 10 to 0.
 // uses counter to verify the correct amount of loops done.
+request pbs/debug
+debug traceOn
 
 var x = 10
 

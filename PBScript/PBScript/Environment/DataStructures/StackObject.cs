@@ -4,7 +4,7 @@ namespace PBScript.Environment.DataStructures;
 
 public class StackObject: ObjectBase
 {
-    private readonly Stack<IPbsValue> _stack = new();
+    private readonly Stack<IPbsValue> Stack = new();
 
     public StackObject(string objectName)
     {
@@ -26,28 +26,28 @@ public class StackObject: ObjectBase
 
     private IPbsValue Count(string param, IPbsEnvironment env)
     {
-        return new PbsValue(_stack.Count);
+        return new PbsValue(Stack.Count);
     }
     
     private IPbsValue Pop(string param, IPbsEnvironment env)
     {
-        return _stack.Count>0 ? _stack.Pop() : PbsValue.Null;
+        return Stack.Count>0 ? Stack.Pop() : PbsValue.Null;
     }
 
     private IPbsValue Peek(string param, IPbsEnvironment? env)
     {
-        return _stack.Count>0 ? _stack.Peek() : PbsValue.Null;
+        return Stack.Count>0 ? Stack.Peek() : PbsValue.Null;
     }
     
     private IPbsValue Push(IPbsValue value, IPbsEnvironment env)
     {
-        _stack.Push(value);
+        Stack.Push(value);
         return PbsValue.True;
     }
     
     private IPbsValue Clear(string param, IPbsEnvironment env)
     {
-        _stack.Clear();
+        Stack.Clear();
         return PbsValue.True;
     }
     

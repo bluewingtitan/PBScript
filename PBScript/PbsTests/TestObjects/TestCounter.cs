@@ -17,7 +17,7 @@ public class TestCounter: IPbsObject
     public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
     {
         Counter++;
-        return PbsValue.True;
+        return new PbsValue(Counter);
     }
 
     public string GetStringValue()

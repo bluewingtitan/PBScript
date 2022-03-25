@@ -11,7 +11,7 @@ debug traceOn
 assert true (true is boolean) and $true
 assert save ""0""
 
-assert true (false is boolean) and (not $false)
+assert true (false is boolean) and (not false)
 assert save ""1""
 
 assert true null is null

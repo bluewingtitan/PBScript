@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using PBScript.Environment;
 using PBScript.Environment.Debug;
@@ -40,6 +41,9 @@ public abstract class TestBase
         var runtime = _program.GetRuntime(Environment);
         
         Assert.DoesNotThrow(runtime.ExecuteAll);
+        
+        Console.WriteLine($"Executed within {runtime.Iterations} iterations.");
+        
         Assert.NotNull(Environment.GetObject(CounterKey));
     }
 }

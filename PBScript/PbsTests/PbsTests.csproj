@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\PbsBenchmarks\PbsBenchmarks.csproj" />
       <ProjectReference Include="..\PBScript\PBScript.csproj" />
     </ItemGroup>
 

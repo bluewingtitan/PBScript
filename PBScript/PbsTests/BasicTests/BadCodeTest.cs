@@ -134,6 +134,7 @@ $x = 10";
         Assert.True(action.AlwaysFalse);
         Assert.AreEqual(PbsValue.Null, action.Execute(PbsEnvironment.ProductionReady()));
 
+        PbsInterpreter.Log = true;
         action = new PbsAction("(true and false)");
         Assert.False(action.AlwaysFalse);
         Assert.AreEqual(false, action.Execute(PbsEnvironment.ProductionReady()).BooleanValue);

@@ -4,7 +4,7 @@ namespace PBScript.Interpretation;
 
 public struct PbsInterpretationResults
 {
-    public PbsRuntime GetRuntime(IPbsEnvironment environment)
+    public readonly PbsRuntime GetRuntime(IPbsEnvironment environment)
     {
         return new PbsRuntime(environment, this);
     }

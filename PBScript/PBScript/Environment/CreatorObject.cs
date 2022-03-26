@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Microsoft.VisualBasic.CompilerServices;
 using PBScript.Interfaces;
 using PBScript.Interpretation;
 
@@ -15,12 +16,17 @@ public class CreatorObject: ObjectBase
         ObjectName = objectName;
         _creator = creator;
 
-        Register("create", Create);
+        RegisterTyped("create", Create);
     }
 
-    private IPbsValue Create(string v, IPbsEnvironment env)
+    private PbsValue Create(PbsValue[] v, IPbsEnvironment env)
     {
-        var name =  v.Trim().Split(" ")[0];
+        if (v.Length<1)
+        {
+            return PbsValue.False;
+        }
+        
+        var name = v[0].StringValue ?? "";
 
         if (!Regex.IsMatch(name, PbsInterpreter.TokenRegex))
         {
@@ -29,11 +35,11 @@ public class CreatorObject: ObjectBase
 
         var obj = _creator(name);
             
-        env.RegisterObject(obj, true);
+        env.RegisterObject(obj);
         return PbsValue.True;
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(PbsValue[] param)
     {
         return PbsValue.Null;
     }
@@ -44,10 +50,4 @@ public class CreatorObject: ObjectBase
     }
 
     public override string ObjectName { get; }
-    public override string ObjectType => ObjectName + "Creator";
-
-    public override string GetStringValue()
-    {
-        return ObjectType;
-    }
 }

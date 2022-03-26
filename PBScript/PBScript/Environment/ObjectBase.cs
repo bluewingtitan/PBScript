@@ -7,51 +7,30 @@ namespace PBScript.Environment;
 
 public abstract class ObjectBase: IPbsObject
 {
-    protected delegate IPbsValue CommandDelegate(string parameter, IPbsEnvironment env);
-    private readonly Dictionary<string, CommandDelegate> _commands = new();
-    protected delegate IPbsValue CommandDelegateTyped(IPbsValue value, IPbsEnvironment env);
+    
+    protected delegate PbsValue CommandDelegateTyped(PbsValue[] value, IPbsEnvironment env);
     private readonly Dictionary<string, CommandDelegateTyped> _typedCommands = new();
 
     public ObjectBase()
-    {
-        Register("is", (s,e) => new PbsValue(Is(s)));
-        // ReSharper disable once StringLiteralTypo
-        Register("isnot", (s,e) => new PbsValue(!Is(s)));
-    }
+    {}
+    
+    protected abstract PbsValue DefaultAction(PbsValue[] param);
 
-    protected virtual bool Is(string param)
-    {
-        return param?.Trim().ToLower().Equals(ObjectType.ToLower()) ?? false;
-    }
-
-    protected abstract IPbsValue DefaultAction(string param);
-
-    protected void Register(string name, CommandDelegate command) => _commands[name] = command;
     protected void RegisterTyped(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
-
     public abstract string GetDocumentation();
     public abstract string ObjectName { get; }
-    public abstract string ObjectType { get; }
-
-    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public PbsValue ExecuteAction(string command, PbsValue[] value, IPbsEnvironment env)
     {
         if (PbsInterpreter.Log)
-        {
-            env.Log(GetType().Name, $"run '{command} {parameter ?? ""}'");
-        }
-        
+            env.Log(ObjectName, $"run {command}({String.Concat(value.Select(x=>x.AsString()).ToList())})");
+
         command = command.Trim();
-        parameter = parameter?.Trim() ?? "0";
 
         if (_typedCommands.ContainsKey(command))
         {
-            var value = new PbsAction($"({parameter})").Execute(env);
             return _typedCommands[command](value, env);
         }
         
-            
-        return _commands.ContainsKey(command)? _commands[command](parameter, env) : DefaultAction(parameter);
+        return DefaultAction(value);
     }
-
-    public abstract string GetStringValue();
 }

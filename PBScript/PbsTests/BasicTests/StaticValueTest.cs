@@ -8,13 +8,13 @@ public class StaticValueTest: TestBase
     protected override string Code => $@"
 request pbs/debug
 debug traceOn
-assert true (true is boolean) and $true
+assert true( (true is boolean) && true)
 assert save ""0""
 
-assert true (false is boolean) and (not false)
+assert true ((false isBoolean) && (!false))
 assert save ""1""
 
-assert true null is null
+assert true (null isNull)
 assert save ""2""
 ";
 

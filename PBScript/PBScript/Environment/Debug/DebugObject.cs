@@ -16,12 +16,12 @@ COMMANDS:
     true simply returns true. does nothing else.";
     }
 
-    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public PbsValue ExecuteAction(string command, PbsValue[] parameter, IPbsEnvironment env)
     {
         switch (command.Trim())
         {
             case "log":
-                Console.WriteLine(parameter);
+                Console.WriteLine(String.Concat(parameter.Select(x=>x.AsString())));
                 break;
             
             case "traceOn":
@@ -46,8 +46,4 @@ COMMANDS:
         return PbsValue.True;
     }
         
-    public string GetStringValue()
-    {
-        return PbsValue.True.AsString();
-    }
 }

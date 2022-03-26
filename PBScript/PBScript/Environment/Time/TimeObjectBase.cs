@@ -6,7 +6,6 @@ public abstract class TimeObjectBase: ObjectBase
 {
     
     public override string ObjectName { get; }
-    public override string ObjectType => ObjectName;
     protected abstract int GetValueFromDateTime(DateTime dt);
 
     private int Value => GetValueFromDateTime(_useUtc ? DateTime.UtcNow : DateTime.Now);
@@ -24,13 +23,9 @@ public abstract class TimeObjectBase: ObjectBase
         return "Represents a numerical value the current date.";
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(PbsValue[] param)
     {
         return new PbsValue(Value);
     }
 
-    public override string GetStringValue()
-    {
-        return Value.ToString();
-    }
 }

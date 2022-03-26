@@ -4,50 +4,55 @@ namespace PBScript.Environment.DataStructures;
 
 public class StackObject: ObjectBase
 {
-    private readonly Stack<IPbsValue> Stack = new();
+    private readonly Stack<PbsValue> _stack = new();
 
     public StackObject(string objectName)
     {
         ObjectName = objectName;
         
-        Register("pop", Pop);
-        Register("peek", Peek);
-        Register("clear", Clear);
-        Register("count", Count);
+        RegisterTyped("pop", Pop);
+        RegisterTyped("peek", Peek);
+        RegisterTyped("clear", Clear);
+        RegisterTyped("count", Count);
         RegisterTyped("push", Push);
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(PbsValue[] param)
     {
-        return Peek("", null);
+        return Peek(null, null);
     }
 
     #region Operations
 
-    private IPbsValue Count(string param, IPbsEnvironment env)
+    private PbsValue Count(PbsValue[] param, IPbsEnvironment env)
     {
-        return new PbsValue(Stack.Count);
+        return new PbsValue(_stack.Count);
     }
     
-    private IPbsValue Pop(string param, IPbsEnvironment env)
+    private PbsValue Pop(PbsValue[] param, IPbsEnvironment env)
     {
-        return Stack.Count>0 ? Stack.Pop() : PbsValue.Null;
+        return _stack.Count>0 ? _stack.Pop() : PbsValue.Null;
     }
 
-    private IPbsValue Peek(string param, IPbsEnvironment? env)
+    private PbsValue Peek(PbsValue[] param, IPbsEnvironment? env)
     {
-        return Stack.Count>0 ? Stack.Peek() : PbsValue.Null;
+        return _stack.Count>0 ? _stack.Peek() : PbsValue.Null;
     }
     
-    private IPbsValue Push(IPbsValue value, IPbsEnvironment env)
+    private PbsValue Push(PbsValue[] value, IPbsEnvironment env)
     {
-        Stack.Push(value);
+        if (value.Length < 1)
+        {
+            return PbsValue.False;
+        }
+
+        _stack.Push(value[0]);
         return PbsValue.True;
     }
     
-    private IPbsValue Clear(string param, IPbsEnvironment env)
+    private PbsValue Clear(PbsValue[] param, IPbsEnvironment env)
     {
-        Stack.Clear();
+        _stack.Clear();
         return PbsValue.True;
     }
     
@@ -66,10 +71,4 @@ Use 'newStack count' to get the amount of items in the stack.";
     }
 
     public override string ObjectName { get; }
-    public override string ObjectType => "stack";
-
-    public override string GetStringValue()
-    {
-        return Peek("", null).AsString();
-    }
 }

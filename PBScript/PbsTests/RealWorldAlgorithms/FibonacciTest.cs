@@ -11,7 +11,7 @@ request pbs/debug
 " + PbsBenchmarks.Library.Fibonacci(50) + 
                                       @"
 // test for last number to be the actual 50th number in the fib-sequence.
-assert true fib pop == 7778742049
+assert true (fib pop() == 7778742049)
 assert save ""correct""
 ";
 

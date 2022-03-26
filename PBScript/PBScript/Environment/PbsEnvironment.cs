@@ -97,12 +97,13 @@ public class PbsEnvironment: IPbsEnvironment
 
     public IPbsObject? GetObject(string key)
     {
-        if (PbsInterpreter.Log)
-            Log("Env", $"Get '{key}'");
         key = key.Trim();
 
         if (!_objects.ContainsKey(key))
             return null;
+        
+        if (PbsInterpreter.Log)
+            Log("Env", $"Got '{key}'");
             
         return _objects[key];
     }

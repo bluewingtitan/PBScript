@@ -32,7 +32,6 @@ public class ThrowsIfNotInitializedTest
         Assert.Throws<NotProperlyInitializedException>(() => new IfElement().ThrowIfNotValid());
         Assert.Throws<UnexpectedBlockEndException>(() => new EndElement().ThrowIfNotValid());
         Assert.Throws<InvalidRequestException>(() => new RequestElement().ThrowIfNotValid());
-        Assert.Throws<NotProperlyInitializedException>(() => new VariableElement().ThrowIfNotValid());
         Assert.Throws<NotProperlyInitializedException>(() => new WhileElement().ThrowIfNotValid());
     }
 }

@@ -27,7 +27,7 @@ public class PbsRuntime
 
             if (PbsInterpreter.Log)
             {
-                _environment.Log("runtime", "RUN #" + _pointer);
+                _environment.Log("RUNTIME", "\t\t\t\t\t------------" + "RUN #" + _pointer + "------------");
             }
 
             _pointer = _elements[_pointer].Execute(_environment);

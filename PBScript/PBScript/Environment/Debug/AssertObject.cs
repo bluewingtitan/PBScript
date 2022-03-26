@@ -18,8 +18,15 @@ public class AssertObject: ObjectBase
     }
 
 
-    private IPbsValue SaveAs(IPbsValue v, IPbsEnvironment env)
+    private PbsValue SaveAs(PbsValue[] value, IPbsEnvironment env)
     {
+        if (value.Length < 1)
+        {
+            return PbsValue.False;
+        }
+
+        var v = value[0];
+        
         if (v.StringValue == null)
             return PbsValue.False;
         
@@ -27,22 +34,36 @@ public class AssertObject: ObjectBase
         return PbsValue.True;
     }
     
-    private IPbsValue AssertNull(IPbsValue v, IPbsEnvironment env)
-         {
-             if (v.ReturnType is VariableType.Null)
-             {
-                 _lastResult = true;
-                 return PbsValue.True;
-             }
-             
-             _lastResult = false;
-             return PbsValue.False;
-         }
-
-    private IPbsValue AssertNotNull(IPbsValue v, IPbsEnvironment env)
+    private PbsValue AssertNull(PbsValue[] value, IPbsEnvironment env)
     {
+        if (value.Length < 1)
+        {
+            return PbsValue.False;
+        }
+
+        var v = value[0];
+
+        if (v.ReturnType is VariableType.Null)
+        {
+            _lastResult = true;
+            return PbsValue.True;
+        }
+             
+        _lastResult = false;
+        return PbsValue.False;
+    }
+
+    private PbsValue AssertNotNull(PbsValue[] value, IPbsEnvironment env)
+    {
+        if (value.Length < 1)
+        {
+            return PbsValue.False;
+        }
+
+        var v = value[0];
+        
         if (v.ReturnType is not VariableType.Null && 
-            v.ReturnType is not VariableType.Unsupported)
+            v.ReturnType is not VariableType.Undefined)
         {
             _lastResult = true;
             return PbsValue.True;
@@ -52,8 +73,14 @@ public class AssertObject: ObjectBase
         return PbsValue.False;
     }
     
-    private IPbsValue AssertTrue(IPbsValue v, IPbsEnvironment env)
+    private PbsValue AssertTrue(PbsValue[] value, IPbsEnvironment env)
     {
+        if (value.Length < 1)
+            return PbsValue.False;
+        
+        var v = value[0];
+        
+        
         if (v.BooleanValue is true)
         {
             _lastResult = true;
@@ -64,8 +91,13 @@ public class AssertObject: ObjectBase
         return PbsValue.False;
     }
     
-    private IPbsValue AssertFalse(IPbsValue v, IPbsEnvironment env)
+    private PbsValue AssertFalse(PbsValue[] value, IPbsEnvironment env)
     {
+        if (value.Length < 1)
+            return PbsValue.False;
+        
+        var v = value[0];
+
         if (v.BooleanValue is false)
         {
             _lastResult = true;
@@ -75,7 +107,7 @@ public class AssertObject: ObjectBase
         _lastResult = false;
         return PbsValue.False;
     }
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(PbsValue[] param)
     {
         return PbsValue.True;
     }
@@ -86,9 +118,4 @@ public class AssertObject: ObjectBase
     }
 
     public override string ObjectName => "assert";
-    public override string ObjectType => "assert";
-    public override string GetStringValue()
-    {
-        return ObjectType;
-    }
 }

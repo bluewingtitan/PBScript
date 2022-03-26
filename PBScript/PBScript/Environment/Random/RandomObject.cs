@@ -15,16 +15,15 @@ namespace PBScript.Environment.Random;
 public class RandomObject: ObjectBase
 {
     public override string ObjectName => "random";
-    public override string ObjectType => "random";
     private readonly System.Random _r = new System.Random();
 
     public RandomObject()
     {
-        Register("boolean", (s, e) => new PbsValue(NextBoolean()));
-        Register("number", (s, e) => new PbsValue(NextNumber()));
+        RegisterTyped("boolean", (s, e) => new PbsValue(NextBoolean()));
+        RegisterTyped("number", (s, e) => new PbsValue(NextNumber()));
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(PbsValue[] param)
     {
         return new PbsValue(NextBoolean());
     }
@@ -42,10 +41,5 @@ public class RandomObject: ObjectBase
     public override string GetDocumentation()
     {
         return "Any usage in if-statements will result in a random boolean, Usage as $random will result in a random integer between 0 (inclusive) and 100 (exclusive)";
-    }
-
-    public override string GetStringValue()
-    {
-        return NextNumber() + "";
     }
 }

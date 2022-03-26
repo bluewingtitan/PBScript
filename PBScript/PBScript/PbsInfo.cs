@@ -9,9 +9,9 @@ public static class PbsInfo
     public static string VersionCodeDetailed = $"{MajorVersion}.{MinorVersion}.{SubMinorVersion} patch_{PatchVersion}";
     
     public const int MajorVersion = 0;
-    public const int MinorVersion = 6;
-    public const int SubMinorVersion = 3;
-    public const string PatchVersion = "220325";
+    public const int MinorVersion = 7;
+    public const int SubMinorVersion = 0;
+    public const string PatchVersion = "220326";
 
     /// <summary>
     /// Feel free to print this somewhere in the project you are using PBScript in to give credit.

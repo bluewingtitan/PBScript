@@ -1,4 +1,6 @@
+using System.Text.RegularExpressions;
 using PBScript.Exception;
+using PBScript.ExpressionParsing.Exceptions;
 using PBScript.Interfaces;
 using PBScript.Interpretation;
 
@@ -23,7 +25,14 @@ public class ActionElement: ElementBase
             throw new NotProperlyInitializedException("an action-Element");
         }
 
-        _action?.Execute(env);
+        try
+        {
+            _action?.Execute(env);
+        }
+        catch (ExpressionParsingException e)
+        {
+            throw new PbsException(e.Reason, LineText, SourceCodeLineNumber);
+        }
         return LineIndex + 1;
     }
 
@@ -40,9 +49,22 @@ public class ActionElement: ElementBase
         base.ParseLine(code, lineIndex, sourceCodeLineNumber);
 
         code = code.Trim();
+        
+        var matches = Regex.Matches(code, PbsInterpreter.TokenRegex);
+        
+        if (matches.Count == 0 || matches[0].Index > 0)
+        {
+            throw new InvalidLineException(LineText, SourceCodeLineNumber);
+        }
 
-        var a = new PbsAction(code);
-        _action = a;
-        _token = a.ObjectToken;
+        _token = matches[0].Value;
+        try
+        {
+            _action = new PbsAction(code);
+        }
+        catch (ExpressionParsingException e)
+        {
+            throw new PbsException(e.Reason, e.OperatorOrToken, sourceCodeLineNumber);
+        }
     }
 }

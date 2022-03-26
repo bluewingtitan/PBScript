@@ -114,9 +114,6 @@ public static class PbsInterpreter
     private static IPbsElement LineToElement(string line, int lineIndex, int sourceCodeLineNumber)
     {
         line = line.Trim();
-
-        if (line.StartsWith("$"))
-            line = line.Split("$", 2)[1];
         
         IPbsElement? element = null;
         // Separate first token + brackets

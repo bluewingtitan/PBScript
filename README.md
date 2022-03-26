@@ -5,7 +5,7 @@ The name derrives from "Plant Based Script", as it was originally developed for 
 
 It allows for easy injection of special actions a player may use by attaching objects with defined actions to the runtime environment.
 
-For a compact documentation of PBScript look into the [Documentation](Documentation/Index.html)
+For a compact documentation of PBScript look into the [Documentation](Documentation/Index.html) (HIGHLY W.I.P. + many upcoming changes! Lang is not stable yet!)
 
 
 # Caution

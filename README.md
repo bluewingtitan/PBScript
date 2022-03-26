@@ -1,7 +1,7 @@
 # PBScript
 
 PBScript is a simple scripting language pointed towards usage in games (especially unity and godot+C#).  
-The name derrives from "Plant Based Script", as it was originally developed for a small game I am working on.
+The name derrives from "Plant Based Script", as it was originally developed for a small game I am working on that has something to do with plants.
 
 It allows for easy injection of special actions a player may use by attaching objects with defined actions to the runtime environment.
 

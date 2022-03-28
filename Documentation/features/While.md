@@ -20,4 +20,4 @@ end
 
 While-Loops are closed by an end. See [End](End.md) for more.
 
-See [Logic Operators](LogicOperators.md) for more information on writing conditions.
+See [Operators](Operators.md) for more information on writing conditions.

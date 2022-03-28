@@ -2,7 +2,7 @@
 
 > Creation: v0.6
 > 
-> Last Update: v0.6
+> Last Update: v0.7
 > 
 > Code-Coverage: 100%
 
@@ -26,4 +26,11 @@ dayOfYear `request .../dayOfYear` Represents the dayOfYear part of the current d
 
 month `request .../month` Represents the month part of the current date (between 1 and 12).
 
-year `request .../second` Represents the year part of the current date.
+year `request .../year` Represents the year part of the current date.
+
+Simply use the wanted time-unit as a variable:
+
+```
+if(day == 10) 
+// ...
+```

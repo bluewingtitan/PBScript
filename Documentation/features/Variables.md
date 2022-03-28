@@ -4,8 +4,6 @@ Variables are storages for values.
 
 Variable names have to start with a letter and may include uppercase and lowercase letters, numbers and underscores.
 
-
-
 ### Declaration: `var x = value` or `var x set value`
 
 Value may be a fixed value (like `true`, `"string!"` or `420.69`) , another variable or a action (like `aVariable`, `random number`, `$var` or `aStackObject peek`) 
@@ -14,23 +12,15 @@ Value may be a fixed value (like `true`, `"string!"` or `420.69`) , another vari
 
 Works just like decleration, just without the variable keyword.
 
-
-
 `x is [number;string;boolean;null;unsupported;]`
 
 Evaluates to true/false depending if the Value Type of x is the given type.
 
 Also available as isnot (inverted results.)
 
-
-
-
-
 `x += aValue` or `x add aValue`
 
 Adds aValue to the current value of x. aValue has to evaluate to the the same value-type as x.
-
-
 
 ### Only available if the Valuetype of x is Number:
 
@@ -38,31 +28,21 @@ Adds aValue to the current value of x. aValue has to evaluate to the the same va
 
 Removes aNumericValue from the current value of x.
 
-
-
 `x *= aNumericValue` or `x multiply aNumericValue` or `x ply aNumericValue`
 
 Sets the value of x to it's current value multiplied by aNumericValue.
-
-
 
 `x /= aNumericValue` or `x divide aNumericValue` or `x div aNumericValue`
 
 Sets the value of x to it's current value divided by aNumericValue.
 
-
-
 `x ++` or `x up`
 
 Adds 1 to the value of x. (Also available if ValueType of x is null or undefined, treating the current value as 0 and updating the type to Number).
 
-
-
 `x --` or `x down`
 
 Removes 1 from the value of x. (Also available if ValueType of x is null or undefined, treating the current value as 0 and updating the type to Number).
-
-
 
 ## Possible Value Types
 
@@ -86,48 +66,4 @@ Variables with the type Number store a numeric value. The value is stored in a d
 
 Unsupported mostly behaves like null. It's a sign that something went wrong internally and mostly exists to help developers of extra repositories and features debug their code a bit better, as it shows that "something" was assigned somewhere, just not the thing they expected.
 
-
-
-
-
-## Raw Insertions
-
-Raw Insertions are somewhat complex topic. They allow one to use variables as variable names, even logic operators; or to insert values inside of strings.
-
-The only thing they won't work as are in place of tokens (variable names, instead of if, elseif, request, ...) and inside of requests themselfes (`request $variable` is not valid.)
-
-Raw Insertions are done by appending a \$ before the variable name (variable `x` will be written as `$x` to insert it as raw value).
-
-Example, Operators:
-
-```
-var prefix = "not"
-var x = 10
-var y = 20
-
-// if this would be prefix without a $, this would be
-// "not" (10 == 20)
-// after putting in the values, which would not be valid
-// and will be evaluated to null (resulting in false).
-if $prefix (x == y)
-    // code here will run, because the full condition will evaluate to
-    // not (10 == 20), which is true.
-end
-
-prefix = ""
-
-if $prefix (x == y)
-    // code here won't run, because the full condition will evaluate to
-    // (10 == 20), which is false.
-end
-```
-
-Example, Insert value into String:
-
-```
-var value = 420
-var string = "This is a string with the number $value inserted."
-
-// string will result in
-// "This is a string with the number 420 inserted."
-```
+# x = 1

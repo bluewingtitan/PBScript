@@ -17,9 +17,9 @@ request pbs/debug
 request pbs/stack
 debug traceOn
 
-stack create ""stk""
+var stk = stack.create()
 
-assert false(stack create(""+++""))
+assert true(stack create() isObject)
 assert save(""prepare0"")
 
 assert null(stack)

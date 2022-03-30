@@ -17,7 +17,7 @@ public class QueueObject: ObjectBase
         RegisterTyped("enqueue", Enqueue);
     }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return Peek(null, null);
     }
@@ -34,7 +34,7 @@ public class QueueObject: ObjectBase
         return _queue.Count>0 ? _queue.Dequeue() : PbsValue.Null;
     }
 
-    private PbsValue Peek(PbsValue[] param, IPbsEnvironment? env)
+    private PbsValue Peek(PbsValue[]? param, IPbsEnvironment? env)
     {
         return _queue.Count>0 ? _queue.Peek() : PbsValue.Null;
     }

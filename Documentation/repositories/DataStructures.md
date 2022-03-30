@@ -2,7 +2,7 @@
 
 > Creation: v0.6
 > 
-> Last Update: v0.7x = 1
+> Last Update: v0.7.0 = 1
 > 
 > Code-Coverage: 100%
 
@@ -12,9 +12,9 @@ Grants access to stacks and queues.
 
 ### stack `request pbs/stack` (Creator Object)
 
-`stack.create(name)` Creates and attaches a new stack-object under the name $name (using 'newStack' as example).
+`stack.create()` Creates and attaches a new stack-object.
 
-### stack-object `stack.create("newStack")`
+### stack-object `var newStack = stack.create()`
 
 `newStack.pop()` Pops and returns the top value from the stack.
 
@@ -30,9 +30,9 @@ Grants access to stacks and queues.
 
 ### queue `request pbs/queue` (Creator Object)
 
-`queue.create(name)`Creates and attaches a new queue-object under the name $name (using 'newQueue' as example).
+`queue.create()`Creates and attaches a new queue-object
 
-### queue-object `queue.create("newQueue")`
+### queue-object `var newQueue = queue.create()`
 
 `newQueue.dequeue()` Dequeues and returns the front value in the queue.
 

@@ -14,7 +14,7 @@ public abstract class ObjectBase: IPbsObject
     public ObjectBase()
     {}
     
-    protected abstract PbsValue DefaultAction(PbsValue[] param);
+    protected abstract PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env);
 
     protected void RegisterTyped(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
     public abstract string GetDocumentation();
@@ -31,6 +31,6 @@ public abstract class ObjectBase: IPbsObject
             return _typedCommands[command](value, env);
         }
         
-        return DefaultAction(value);
+        return DefaultAction(command, value, env);
     }
 }

@@ -21,25 +21,10 @@ public class CreatorObject: ObjectBase
 
     private PbsValue Create(PbsValue[] v, IPbsEnvironment env)
     {
-        if (v.Length<1)
-        {
-            return PbsValue.False;
-        }
-        
-        var name = v[0].StringValue ?? "";
-
-        if (!Regex.IsMatch(name, PbsInterpreter.TokenRegex))
-        {
-            return PbsValue.False;
-        }
-
-        var obj = _creator(name);
-            
-        env.RegisterObject(obj);
-        return PbsValue.True;
+        return new PbsValue(_creator("wrapped_object"));
     }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return PbsValue.Null;
     }

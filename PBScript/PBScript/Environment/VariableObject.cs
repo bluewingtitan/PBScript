@@ -20,8 +20,13 @@ public class VariableObject : ObjectBase
 
     public override string ObjectName { get; }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
+        if (Value.PbsObjectValue != null)
+        {
+            return Value.PbsObjectValue.ExecuteAction(command, param, env);
+        }
+        
         return Value;
     }
 }
@@ -32,6 +37,7 @@ public enum VariableType
     Number,
     String,
     Undefined,
+    PbsObject,
     Null,
     /// <summary>
     /// Special token meant for signaling a potential stop-point for a function-call

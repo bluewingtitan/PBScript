@@ -23,7 +23,7 @@ public class RandomObject: ObjectBase
         RegisterTyped("number", (s, e) => new PbsValue(NextNumber()));
     }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return new PbsValue(NextBoolean());
     }

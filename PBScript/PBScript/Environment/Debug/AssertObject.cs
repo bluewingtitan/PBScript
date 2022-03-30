@@ -107,7 +107,7 @@ public class AssertObject: ObjectBase
         _lastResult = false;
         return PbsValue.False;
     }
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return PbsValue.True;
     }

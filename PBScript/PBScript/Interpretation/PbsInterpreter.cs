@@ -20,7 +20,7 @@ public static class PbsInterpreter
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         
-
+        
         var lines = new List<string>(programText.Split("\n"));
         var interpretationResults = new PbsInterpretationResults
         {

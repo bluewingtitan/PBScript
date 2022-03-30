@@ -15,11 +15,11 @@ public class QueueTest: TestBase
     protected override string Code => $@"
 request pbs/debug
 request pbs/queue
+debug.traceOn()
 
+var q = queue.create()
 
-queue create ""q""
-
-assert false queue create
+assert true (queue create() isObject)
 assert save ""prepare0""
 
 assert null queue

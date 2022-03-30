@@ -23,7 +23,7 @@ public abstract class TimeObjectBase: ObjectBase
         return "Represents a numerical value the current date.";
     }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return new PbsValue(Value);
     }

@@ -17,12 +17,25 @@ public class PbsValue: IExpressionValue
             if (StringValue != null) return VariableType.String;
             if (BooleanValue != null) return VariableType.Boolean;
             if (ObjectValue is IExpressionParenthesisOperator) return VariableType.Token_FunctionClosure;
+            if (PbsObjectValue != null) return VariableType.PbsObject;
 
             // => Not null, bot none of the supported types.
             return VariableType.Undefined;
         }
     }
-    
+
+    public IPbsObject? PbsObjectValue
+    {
+        get
+        {
+            if (ObjectValue is IPbsObject po)
+            {
+                return po;
+            }
+
+            return null;
+        }
+    }
 
     public bool? BooleanValue
     {
@@ -109,6 +122,11 @@ public class PbsValue: IExpressionValue
     public PbsValue(bool objectValue)
     {
         //if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: bool <" + (objectValue.ToString()?? "null") + ">");
+        ObjectValue = objectValue;
+    }
+
+    public PbsValue(IPbsObject objectValue)
+    {
         ObjectValue = objectValue;
     }
     

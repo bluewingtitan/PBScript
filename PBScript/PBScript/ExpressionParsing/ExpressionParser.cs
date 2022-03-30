@@ -43,6 +43,7 @@ public static class ExpressionParser
         dict.Add("isNull", new IsOperator(VariableType.Null));
         dict.Add("isString", new IsOperator(VariableType.String));
         dict.Add("isBoolean", new IsOperator(VariableType.Boolean));
+        dict.Add("isObject", new IsOperator(VariableType.PbsObject));
         dict.Add("isUndefined", new IsOperator(VariableType.Undefined));
 
         #endregion

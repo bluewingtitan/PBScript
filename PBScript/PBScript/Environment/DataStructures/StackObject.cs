@@ -17,7 +17,7 @@ public class StackObject: ObjectBase
         RegisterTyped("push", Push);
     }
 
-    protected override PbsValue DefaultAction(PbsValue[] param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return Peek(null, null);
     }
@@ -34,7 +34,7 @@ public class StackObject: ObjectBase
         return _stack.Count>0 ? _stack.Pop() : PbsValue.Null;
     }
 
-    private PbsValue Peek(PbsValue[] param, IPbsEnvironment? env)
+    private PbsValue Peek(PbsValue[]? param, IPbsEnvironment? env)
     {
         return _stack.Count>0 ? _stack.Peek() : PbsValue.Null;
     }

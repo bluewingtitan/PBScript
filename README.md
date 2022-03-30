@@ -14,3 +14,14 @@ PBScript turns a script into a structure of language elements and let's you exec
 # Caution
 The current version of PBScript is well tested in regards of functionality, but the api, language features, syntax, ... may (and propably will to some extend) change in the future and some edge-cases may very well still exist.
 
+
+# Roadmap
+
+## \[Almost there] Full Support Multi-Argument-Calls
+> The current way of how calls are handled allow for that, but it's still pretty sloppy. It's also the main-reason why the language version that actually supports that (and is around 3000x (not %!) faster than the current main branch version) is not on the main branch yet.
+
+## \[Next Highest Priority] Functions
+> Functions are great! They let users design modules that they may use multiple times over their code.
+
+## \[Mostly a Concept at that point] User-Defined Library
+> Basically a term for letting users request their own scripts and let them use functions out of them.

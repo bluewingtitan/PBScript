@@ -8,6 +8,8 @@ namespace PBScript.Interfaces;
 
 public class PbsValue: IExpressionValue
 {
+    public static int MaxStringLength = 256;
+    
     public VariableType ReturnType
     {
         get
@@ -110,7 +112,7 @@ public class PbsValue: IExpressionValue
     public PbsValue(string objectValue)
     {
         //if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] created: string <" + (objectValue ?? "null") + ">");
-        ObjectValue = objectValue;
+        ObjectValue = objectValue.Length>MaxStringLength? objectValue.Substring(0, MaxStringLength): objectValue;
     }
 
     public PbsValue(double objectValue)
@@ -142,8 +144,14 @@ public class PbsValue: IExpressionValue
             return;
         
         if(PbsInterpreter.Log) Console.WriteLine("[IPbsValue] set value <" + (newValue?.ToString()?? "null") + ">");
+
+        if (newValue==null)
+        {
+            ObjectValue = null;
+            return;
+        }
         
-        ObjectValue = newValue;
+        ObjectValue = newValue.Length>MaxStringLength? newValue.Substring(0, MaxStringLength): newValue;
     }
     
     public void SetObjectValue(double newValue)
@@ -173,7 +181,7 @@ public class PbsValue: IExpressionValue
         
         if(PbsInterpreter.Log && !suppressLog) Console.WriteLine("[IPbsValue] set: value <" + (objectValue?.ToString()?? "null") + ">");
 
-        if (objectValue is null or "null")
+        if (objectValue is null)
         {
             ObjectValue = null;
             return;
@@ -182,6 +190,12 @@ public class PbsValue: IExpressionValue
         if (objectValue.IsNumber())
         {
             ObjectValue = Convert.ToDouble(objectValue);
+            return;
+        }
+
+        if (objectValue is string s)
+        {
+            ObjectValue = s.Length>MaxStringLength? s.Substring(0, MaxStringLength): s;
             return;
         }
 

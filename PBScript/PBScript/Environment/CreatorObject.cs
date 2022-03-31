@@ -16,7 +16,7 @@ public class CreatorObject: ObjectBase
         ObjectName = objectName;
         _creator = creator;
 
-        RegisterTyped("create", Create);
+        Register("create", Create);
     }
 
     private PbsValue Create(PbsValue[] v, IPbsEnvironment env)

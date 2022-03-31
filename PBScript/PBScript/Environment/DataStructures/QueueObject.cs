@@ -10,11 +10,11 @@ public class QueueObject: ObjectBase
     {
         ObjectName = objectName;
         
-        RegisterTyped("dequeue", Dequeue);
-        RegisterTyped("peek", Peek);
-        RegisterTyped("clear", Clear);
-        RegisterTyped("count", Count);
-        RegisterTyped("enqueue", Enqueue);
+        Register("dequeue", Dequeue);
+        Register("peek", Peek);
+        Register("clear", Clear);
+        Register("count", Count);
+        Register("enqueue", Enqueue);
     }
 
     protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)

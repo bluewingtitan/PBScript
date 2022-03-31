@@ -16,7 +16,7 @@ public abstract class ObjectBase: IPbsObject
     
     protected abstract PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env);
 
-    protected void RegisterTyped(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
+    protected void Register(string name, CommandDelegateTyped command) => _typedCommands[name] = command;
     public abstract string GetDocumentation();
     public abstract string ObjectName { get; }
     public PbsValue ExecuteAction(string command, PbsValue[] value, IPbsEnvironment env)

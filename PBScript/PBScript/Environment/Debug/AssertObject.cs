@@ -10,11 +10,11 @@ public class AssertObject: ObjectBase
 
     public AssertObject()
     {
-        RegisterTyped("save", SaveAs);
-        RegisterTyped("true", AssertTrue);
-        RegisterTyped("false", AssertFalse);
-        RegisterTyped("null", AssertNull);
-        RegisterTyped("notnull", AssertNotNull);
+        Register("save", SaveAs);
+        Register("true", AssertTrue);
+        Register("false", AssertFalse);
+        Register("null", AssertNull);
+        Register("notnull", AssertNotNull);
     }
 
 

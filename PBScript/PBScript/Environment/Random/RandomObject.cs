@@ -19,8 +19,8 @@ public class RandomObject: ObjectBase
 
     public RandomObject()
     {
-        RegisterTyped("boolean", (s, e) => new PbsValue(NextBoolean()));
-        RegisterTyped("number", (s, e) => new PbsValue(NextNumber()));
+        Register("boolean", (s, e) => new PbsValue(NextBoolean()));
+        Register("number", (s, e) => new PbsValue(NextNumber()));
     }
 
     protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)

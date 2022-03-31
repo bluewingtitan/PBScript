@@ -10,11 +10,11 @@ public class StackObject: ObjectBase
     {
         ObjectName = objectName;
         
-        RegisterTyped("pop", Pop);
-        RegisterTyped("peek", Peek);
-        RegisterTyped("clear", Clear);
-        RegisterTyped("count", Count);
-        RegisterTyped("push", Push);
+        Register("pop", Pop);
+        Register("peek", Peek);
+        Register("clear", Clear);
+        Register("count", Count);
+        Register("push", Push);
     }
 
     protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)

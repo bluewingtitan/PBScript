@@ -13,7 +13,7 @@ if not x
 end
 ```
 
-See [Logic Operators](LogicOperators.md) for more information on writing conditions.
+See [Operators](Operators.md) for more information on writing conditions.
 
 # Else
 

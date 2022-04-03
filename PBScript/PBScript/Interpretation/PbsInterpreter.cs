@@ -20,7 +20,7 @@ public static class PbsInterpreter
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         
-
+        
         var lines = new List<string>(programText.Split("\n"));
         var interpretationResults = new PbsInterpretationResults
         {
@@ -114,9 +114,6 @@ public static class PbsInterpreter
     private static IPbsElement LineToElement(string line, int lineIndex, int sourceCodeLineNumber)
     {
         line = line.Trim();
-
-        if (line.StartsWith("$"))
-            line = line.Split("$", 2)[1];
         
         IPbsElement? element = null;
         // Separate first token + brackets

@@ -1,5 +1,6 @@
 using PBScript.Environment;
 using PBScript.Exception;
+using PBScript.ExpressionParsing.Exceptions;
 using PBScript.Interfaces;
 
 namespace PBScript.ProgramElements;
@@ -14,9 +15,16 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         {
             throw new NotProperlyInitializedException(Token);
         }
-        
-        var r = _metaAction?.Execute(env);
-        LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
+
+        try
+        {
+            var r = _metaAction?.Execute(env);
+            LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
+        }
+        catch (ExpressionParsingException e)
+        {
+            throw new PbsException(e.Reason, e.OperatorOrToken, SourceCodeLineNumber);
+        }
 
         if (LastResult)
             return LineIndex + 1;
@@ -43,8 +51,15 @@ public abstract class ConditionalBlockStart: ElementBase, IPbsBlockStart
         var actionCode = "";
         
         actionCode = code.Split(Token,2)[1].Trim();
-        
-        _metaAction = new PbsAction("(" + actionCode + ")");
+
+        try
+        {
+            _metaAction = new PbsAction("(" + actionCode + ")");
+        }
+        catch (ExpressionParsingException e)
+        {
+            throw new PbsException(e.Reason, e.OperatorOrToken, sourceCodeLineNumber);
+        }
     }
 
     public int BlockEndLineIndex { get; private set; }

@@ -70,52 +70,6 @@ end
         Assert.Throws<UnexpectedBlockEndException>(() => new ElseIfElement().ThrowIfNotValid());
     }
     
-    
-    [Test]
-    public void Test_BadVariables()
-    {
-        var code = @"var x =";
-        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
-
-        code = @"var x";
-        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
-
-        
-        code = @"var";
-        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
-        
-        code = @"var + = 7";
-        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
-
-        
-        code = @"var x = 7
-$x = 10";
-        Assert.DoesNotThrow(() => PbsInterpreter.InterpretProgram(code));
-
-
-        code = @"var + = 7";
-        TestForException(code);
-        code = @"var x = 7
-$x = 10";
-        TestForException(code);
-    }
-
-    private void TestForException(string code)
-    {
-        try
-        {
-            PbsInterpreter.InterpretProgram(code); 
-        }
-        catch (PbsException e)
-        {
-            Assert.NotNull(e.Token);
-            Assert.NotNull(e.ErrorDescription);
-            Assert.NotNull(e.SourceCodeLineNumber);
-        }
-    }
-
-
-
     [Test]
     public void Test_BadLine()
     {
@@ -126,17 +80,39 @@ $x = 10";
         Assert.Throws<InvalidLineException>(() => PbsInterpreter.InterpretProgram(code));
                                                                                                  Assert.Throws<InvalidLineException>(() => PbsInterpreter.InterpretProgram(code));
     }
+    
+    [Test]
+    public void Test_BadVariable()
+    {
+        var code = @"var + = 7";
+        Assert.Throws<InvalidVariableInitialization>(() => PbsInterpreter.InterpretProgram(code));
+
+        TestCode(code);
+        TestCode("var x = 7");
+    }
+
+    private void TestCode(string code)
+    {
+        try
+        {
+            PbsInterpreter.InterpretProgram(code);
+        }
+        catch (PbsException e)
+        {
+            Assert.NotNull(e.Token);
+            Assert.NotNull(e.ErrorDescription);
+            Assert.NotNull(e.SourceCodeLineNumber);
+        }
+    }
 
     [Test]
     public void Test_BadAction()
     {
         var action = new PbsAction("");
-        Assert.True(action.AlwaysFalse);
         Assert.AreEqual(PbsValue.Null, action.Execute(PbsEnvironment.ProductionReady()));
 
         PbsInterpreter.Log = true;
-        action = new PbsAction("(true and false)");
-        Assert.False(action.AlwaysFalse);
+        action = new PbsAction("(true && false)");
         Assert.AreEqual(false, action.Execute(PbsEnvironment.ProductionReady()).BooleanValue);
     }
     
@@ -144,7 +120,7 @@ $x = 10";
     public void Test_BadValue()
     {
         var value = new PbsValue(new EndElement());
-        Assert.AreEqual(VariableType.Unsupported, value.ReturnType);
+        Assert.AreEqual(VariableType.Undefined, value.ReturnType);
     }
 
 }

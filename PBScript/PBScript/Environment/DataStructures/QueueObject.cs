@@ -4,7 +4,7 @@ namespace PBScript.Environment.DataStructures;
 
 public class QueueObject: ObjectBase
 {
-    private readonly Queue<IPbsValue> _queue = new();
+    private readonly Queue<PbsValue> _queue = new();
 
     public QueueObject(string objectName)
     {
@@ -14,38 +14,43 @@ public class QueueObject: ObjectBase
         Register("peek", Peek);
         Register("clear", Clear);
         Register("count", Count);
-        RegisterTyped("enqueue", Enqueue);
+        Register("enqueue", Enqueue);
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
-        return Peek("", null);
+        return Peek(null, null);
     }
 
     #region Operations
 
-    private IPbsValue Count(string param, IPbsEnvironment env)
+    private PbsValue Count(PbsValue[] param, IPbsEnvironment env)
     {
         return new PbsValue(_queue.Count);
     }
     
-    private IPbsValue Dequeue(string param, IPbsEnvironment env)
+    private PbsValue Dequeue(PbsValue[] param, IPbsEnvironment env)
     {
         return _queue.Count>0 ? _queue.Dequeue() : PbsValue.Null;
     }
 
-    private IPbsValue Peek(string param, IPbsEnvironment? env)
+    private PbsValue Peek(PbsValue[]? param, IPbsEnvironment? env)
     {
         return _queue.Count>0 ? _queue.Peek() : PbsValue.Null;
     }
     
-    private IPbsValue Enqueue(IPbsValue value, IPbsEnvironment env)
+    private PbsValue Enqueue(PbsValue[] value, IPbsEnvironment env)
     {
-        _queue.Enqueue(value);
+        if (value.Length < 1)
+        {
+            return PbsValue.False;
+        }
+        
+        _queue.Enqueue(value[0]);
         return PbsValue.True;
     }
     
-    private IPbsValue Clear(string param, IPbsEnvironment env)
+    private PbsValue Clear(PbsValue[] param, IPbsEnvironment env)
     {
         _queue.Clear();
         return PbsValue.True;
@@ -66,10 +71,4 @@ Use 'newQueue count' to get the amount of items in the queue.";
     }
 
     public override string ObjectName { get; }
-    public override string ObjectType => "queue";
-
-    public override string GetStringValue()
-    {
-        return Peek("", null).AsString();
-    }
 }

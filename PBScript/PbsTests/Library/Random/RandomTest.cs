@@ -9,22 +9,20 @@ public class RandomTest: TestBase
     
     protected override string Code => $@"
 request pbs/random
+request pbs/debug
 
-var b0 = random
-var b1 = random boolean
+debug traceOn
 
-assert true b0 is boolean and b1 is boolean
-assert save ""b""
+var b0 = random.boolean()
+var b1 = random()
 
-var n0 = $random
-var n1 = random number
+assert.true(b0 isBoolean && b1 isBoolean)
+assert.save(""b"")
 
-assert true n0 is number and n1 is number
-assert save ""n""
+var n0 = random.number()
 
-
-assert true random is random
-assert save ""type""
+assert.true(n0 isNumber)
+assert.save(""n"")
 ";
 
     [Test]
@@ -32,7 +30,6 @@ assert save ""type""
     {
         Assert.True(AssertObject.Results["b"]);
         Assert.True(AssertObject.Results["n"]);
-        Assert.True(AssertObject.Results["type"]);
     }
 
     [Test]

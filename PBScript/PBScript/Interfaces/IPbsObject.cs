@@ -5,9 +5,8 @@ public interface IPbsObject
     public string GetDocumentation();
     
     public string ObjectName { get; }
-        
-    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env);
+    
+    public PbsValue ExecuteAction(string command, PbsValue[] value, IPbsEnvironment env);
 
-    public string GetStringValue();
 
 }

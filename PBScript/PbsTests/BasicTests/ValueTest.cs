@@ -11,7 +11,7 @@ public class ValueTest
     {
         PbsInterpreter.Log = true;
 
-        IPbsValue value = new PbsValue("Value").Lock();
+        PbsValue value = new PbsValue("Value").Lock();
         Assert.AreEqual("Value", value.StringValue);
         value.SetObjectValue(true);
         Assert.AreEqual("Value", value.StringValue);
@@ -19,7 +19,7 @@ public class ValueTest
         Assert.AreEqual("Value", value.StringValue);
         
         
-        IPbsValue value2 = new PbsValue(250).Lock();
+        PbsValue value2 = new PbsValue(250).Lock();
         Assert.AreEqual(250d, value2.NumberValue);
         value2.SetObjectValue(90);
         Assert.AreEqual(250d, value2.NumberValue);
@@ -33,14 +33,14 @@ public class ValueTest
     {
         PbsInterpreter.Log = true;
 
-        IPbsValue value = new PbsValue("Value");
+        PbsValue value = new PbsValue("Value");
         Assert.AreEqual("Value", value.StringValue);
         value.SetObjectValue(true);
         Assert.AreEqual(null, value.StringValue);
         Assert.AreEqual(true, value.BooleanValue);
         
         
-        IPbsValue value2 = new PbsValue(250);
+        PbsValue value2 = new PbsValue(250);
         Assert.AreEqual(250d, value2.NumberValue);
         value2.SetObjectValue(90);
         Assert.AreEqual(90d, value2.NumberValue);

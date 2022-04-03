@@ -19,10 +19,10 @@ debug traceOn
 assert true ""hi"" is ""string""
 assert true assert
 assert false false
-if 0 < 1
-assert true 0 < 1
-elseif 0 < 1
-assert false 0 < 1
+if (0 < 1)
+assert true (0 < 1)
+elseif (0 < 1)
+assert false (0 < 1)
 end
 debug traceOff";
         PbsInterpretationResults results = PbsInterpreter.InterpretProgram(code);

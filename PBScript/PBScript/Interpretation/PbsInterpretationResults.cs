@@ -2,9 +2,9 @@ using PBScript.Interfaces;
 
 namespace PBScript.Interpretation;
 
-public struct PbsInterpretationResults
+public class PbsInterpretationResults
 {
-    public readonly PbsRuntime GetRuntime(IPbsEnvironment environment)
+    public PbsRuntime GetRuntime(IPbsEnvironment environment)
     {
         return new PbsRuntime(environment, this);
     }

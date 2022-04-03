@@ -14,14 +14,10 @@ public class TestCounter: IPbsObject
 
     public string ObjectName => "counter";
     public int Counter { get; private set; }
-    public IPbsValue ExecuteAction(string command, string parameter, IPbsEnvironment env)
+    public PbsValue ExecuteAction(string command, PbsValue[] parameter, IPbsEnvironment env)
     {
         Counter++;
         return new PbsValue(Counter);
     }
 
-    public string GetStringValue()
-    {
-        return Counter.ToString();
-    }
 }

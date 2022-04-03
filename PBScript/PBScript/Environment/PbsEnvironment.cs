@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Immutable;
+using PBScript.Environment.Collections;
 using PBScript.Environment.DataStructures;
 using PBScript.Environment.Debug;
 using PBScript.Environment.Random;
@@ -37,6 +38,11 @@ public enum DefaultRepository
     /// Allows usage of a basic implementation of a stack and a queue, available under pbs/queue and pbs/stack (use as 'stack create $name' to create a new stack)
     /// </summary>
     DataStructures,
+    
+    /// <summary>
+    /// Allows usage of a dictionary and a list
+    /// </summary>
+    Collections,
 }
 
 public class PbsEnvironment: IPbsEnvironment
@@ -48,6 +54,7 @@ public class PbsEnvironment: IPbsEnvironment
         {DefaultRepository.Time_LocalDefault, new PbsTimeRepository(false)},
         {DefaultRepository.Random, new PbsRandomRepository()},
         {DefaultRepository.DataStructures, new PbsDataStructuresRepository()},
+        {DefaultRepository.Collections, new PbsCollectionsRepository()},
     }.ToImmutableDictionary();
         
     private Dictionary<string, IPbsObject> _objects = new Dictionary<string, IPbsObject>();
@@ -97,12 +104,13 @@ public class PbsEnvironment: IPbsEnvironment
 
     public IPbsObject? GetObject(string key)
     {
-        if (PbsInterpreter.Log)
-            Log("Env", $"Get '{key}'");
         key = key.Trim();
 
         if (!_objects.ContainsKey(key))
             return null;
+        
+        if (PbsInterpreter.Log)
+            Log("Env", $"Got '{key}'");
             
         return _objects[key];
     }
@@ -177,6 +185,7 @@ public class PbsEnvironment: IPbsEnvironment
             utcTime?DefaultRepository.Time_UtcDefault:DefaultRepository.Time_LocalDefault,
             DefaultRepository.Random,
             DefaultRepository.DataStructures,
+            DefaultRepository.Collections,
         });
     }
     
@@ -190,6 +199,7 @@ public class PbsEnvironment: IPbsEnvironment
             utcTime?DefaultRepository.Time_UtcDefault:DefaultRepository.Time_LocalDefault,
             DefaultRepository.Random,
             DefaultRepository.DataStructures,
+            DefaultRepository.Collections,
         });
     }
     

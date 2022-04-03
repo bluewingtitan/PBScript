@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using PBScript.Environment;
+using PBScript.Interfaces;
 
 namespace PbsTexts.Library.Time;
 
@@ -23,25 +24,25 @@ public class TimeTestLocal : TestBase
     protected override string Code => $@"
 request pbs/time/local
 
-assert true minute = {Now.Minute}
+assert true (minute == {Now.Minute})
 assert save ""{KeyMinute}""
 
-assert true hour = {Now.Hour}
+assert true (hour == {Now.Hour})
 assert save ""{KeyHour}""
 
-assert true day = {Now.Day}
+assert true (day == {Now.Day})
 assert save ""{KeyDay}""
 
-assert true weekday = {Weekday}
+assert true (weekday == {Weekday})
 assert save ""{KeyWeekday}""
 
-assert true dayOfYear = {Now.DayOfYear}
+assert true (dayOfYear == {Now.DayOfYear})
 assert save ""{KeyDayOfYear}""
 
-assert true month = {Now.Month}
+assert true (month == {Now.Month})
 assert save ""{KeyMonth}""
 
-assert true year = {Now.Year}
+assert true (year == {Now.Year})
 assert save ""{KeyYear}""
 ";
 
@@ -51,7 +52,7 @@ assert save ""{KeyYear}""
 
         Assert.True(Math.Abs(
             (Environment.GetObject("second")?
-                .ExecuteAction("", "", Environment)
+                .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
                 .NumberValue ?? 1000) - DateTime.UtcNow.Second
         ) < 1);
 
@@ -69,35 +70,35 @@ assert save ""{KeyYear}""
     public void Test_CorrectValueTypes()
     {
         Assert.True(Environment.GetObject("second")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("minute")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("hour")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("day")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("weekday")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("dayOfYear")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("month")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
 
         Assert.True(Environment.GetObject("year")?
-            .ExecuteAction("", "", Environment)
+            .ExecuteAction("", Array.Empty<PbsValue>(), Environment)
             .ReturnType == VariableType.Number);
     }
 }

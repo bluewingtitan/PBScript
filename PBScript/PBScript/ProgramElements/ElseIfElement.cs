@@ -1,5 +1,6 @@
 using PBScript.Environment;
 using PBScript.Exception;
+using PBScript.ExpressionParsing.Exceptions;
 using PBScript.Interfaces;
 
 namespace PBScript.ProgramElements;
@@ -20,8 +21,15 @@ public class ElseIfElement: ConditionalBlockStart, IPbsBlockEnd
             return BlockEndLineIndex;
         }
 
-        var r = _metaAction?.Execute(env);
-        LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
+        try
+        {
+            var r = _metaAction?.Execute(env);
+            LastResult = r is {ReturnType: VariableType.Boolean, BooleanValue: { }} && (bool) r.BooleanValue;
+        }
+        catch (ExpressionParsingException e)
+        {
+            throw new PbsException(e.Reason, e.OperatorOrToken, SourceCodeLineNumber);
+        }
 
         if (LastResult)
             return LineIndex + 1;

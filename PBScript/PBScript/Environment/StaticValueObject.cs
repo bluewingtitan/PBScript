@@ -4,13 +4,13 @@ namespace PBScript.Environment;
 
 public class StaticValueObject: ObjectBase
 {
-    public StaticValueObject(IPbsValue value, string objectName)
+    public StaticValueObject(PbsValue value, string objectName)
     {
         _value = value;
         ObjectName = objectName;
     }
 
-    protected override IPbsValue DefaultAction(string param)
+    protected override PbsValue DefaultAction(string command, PbsValue[] param, IPbsEnvironment env)
     {
         return _value;
     }
@@ -22,10 +22,5 @@ public class StaticValueObject: ObjectBase
     }
 
     public override string ObjectName { get; }
-    public override string ObjectType => _value.ReturnType.ToString();
-    private readonly IPbsValue _value;
-    public override string GetStringValue()
-    {
-        return _value.AsString();
-    }
+    private readonly PbsValue _value;
 }

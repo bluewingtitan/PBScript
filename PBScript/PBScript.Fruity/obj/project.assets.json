@@ -1,0 +1,94 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "PBScript/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/PBScript.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PBScript.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PBScript/1.0.0": {
+      "type": "project",
+      "path": "../PBScript/PBScript.csproj",
+      "msbuildProject": "../PBScript/PBScript.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "PBScript >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/dominik/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/mnt/22482B43482B14D7/DEV/PBScript/PBScript/PBScript.Fruity/PBScript.Fruity.csproj",
+      "projectName": "PBScript.Fruity",
+      "projectPath": "/mnt/22482B43482B14D7/DEV/PBScript/PBScript/PBScript.Fruity/PBScript.Fruity.csproj",
+      "packagesPath": "/home/dominik/.nuget/packages/",
+      "outputPath": "/mnt/22482B43482B14D7/DEV/PBScript/PBScript/PBScript.Fruity/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/dominik/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/mnt/22482B43482B14D7/DEV/PBScript/PBScript/PBScript/PBScript.csproj": {
+              "projectPath": "/mnt/22482B43482B14D7/DEV/PBScript/PBScript/PBScript/PBScript.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.2, 6.0.2]"
+          }
+        ],
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.102/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

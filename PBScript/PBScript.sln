@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbsTests", "PbsTests\PbsTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbsBenchmarks", "PbsBenchmarks\PbsBenchmarks.csproj", "{30C61C20-F3D5-4B91-8CBA-2741CA33B236}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBScript.Fruity", "PBScript.Fruity\PBScript.Fruity.csproj", "{CE48BF0A-D89C-4178-BEAD-AFEFEBCC8555}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{30C61C20-F3D5-4B91-8CBA-2741CA33B236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C61C20-F3D5-4B91-8CBA-2741CA33B236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C61C20-F3D5-4B91-8CBA-2741CA33B236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE48BF0A-D89C-4178-BEAD-AFEFEBCC8555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE48BF0A-D89C-4178-BEAD-AFEFEBCC8555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE48BF0A-D89C-4178-BEAD-AFEFEBCC8555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE48BF0A-D89C-4178-BEAD-AFEFEBCC8555}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

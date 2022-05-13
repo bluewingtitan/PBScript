@@ -14,17 +14,17 @@ Only to be used for debug- and developement purposes, should not be enabled for 
 
 ## Objects
 
-### debug `request pbs/debug`
+### debugtoolkit `request debug:debugtoolkit`
 
- `debug.log(text)` Logs text in a raw manner to default output (does not evaluate text before. "string" + 1 will be logged as "string" + 1 instead of string1).
+ `debugtoolkit.log(text)` Logs text in a raw manner to default output (does not evaluate text before. "string" + 1 will be logged as "string" + 1 instead of string1).
 
-`debug.traceOn()` Activates Trace Mode (Prints internal execution details into standard out)
+`debugtoolkit.traceOn()` Activates Trace Mode (Prints internal execution details into standard out)
 
-`debug.traceOff()` Deactivates Trace Mode
+`debugtoolkit.traceOff()` Deactivates Trace Mode
 
 ---------
 
-### assert
+### assert `request debug:assert`
 
 A basic utility for testing code. Checks if certain conditions are met and saves the value for later use after code execution.
 

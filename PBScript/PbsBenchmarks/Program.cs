@@ -1,5 +1,3 @@
-﻿using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
+﻿using BenchmarkDotNet.Running;
 
 var summaries = BenchmarkRunner.Run(typeof(Program).Assembly);

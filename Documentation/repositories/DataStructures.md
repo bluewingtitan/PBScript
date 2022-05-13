@@ -10,7 +10,7 @@ Grants access to stacks and queues.
 
 ## Objects
 
-### stack `request pbs/stack` (Creator Object)
+### stack `request pbs/datastructures:stack` (Creator Object)
 
 `stack.create()` Creates and attaches a new stack-object.
 
@@ -28,7 +28,7 @@ Grants access to stacks and queues.
 
 ---------
 
-### queue `request pbs/queue` (Creator Object)
+### queue `request pbs/datastructures:queue` (Creator Object)
 
 `queue.create()`Creates and attaches a new queue-object
 

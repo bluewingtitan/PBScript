@@ -16,6 +16,6 @@ Opens the possibility for some basic rng.
 
 ### random `request pbs/random`
 
-`random`/`random.boolean()` Returns a random boolean value (true/false)
+`random.boolean()` Returns a random boolean value (true/false)
 
  `random.number()`Returns a random integer number between 0 (inclusive) and 100 (exclusive)

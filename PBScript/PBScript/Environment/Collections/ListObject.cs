@@ -64,9 +64,9 @@ public class ListObject: ObjectBase
         if (key < 0)
             return PbsValue.False;
 
-        if (key > _list.Count-1 && _list.Remove(_list[key]))
+        if (key < _list.Count-1)
         {
-            return PbsValue.True;
+            return _list.Remove(_list[key]) ? PbsValue.True : PbsValue.False;
         }
 
         return PbsValue.False;

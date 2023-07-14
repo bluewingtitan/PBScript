@@ -17,7 +17,6 @@ public class AssertObject: ObjectBase
         Register("notnull", AssertNotNull);
     }
 
-
     private PbsValue SaveAs(PbsValue[] value, IPbsEnvironment env)
     {
         if (value.Length < 1)

@@ -29,6 +29,8 @@ public static class PbsInterpreter
 
         var blockStack = new Stack<IPbsBlockStart>();
         var lineList = new List<IPbsElement>();
+        var labelLines = new Dictionary<string, int>();
+        var gotoElements = new List<GotoElement>();
         
         for (var i = 0; i < lines.Count; i++)
         {
@@ -68,6 +70,12 @@ public static class PbsInterpreter
 
             if (element is IPbsBlockStart start) 
                 blockStack.Push(start);
+            
+            if(element is LabelElement le)
+                labelLines[le.LabelName] = le.LineIndex;
+            
+            if(element is GotoElement ge)
+                gotoElements.Add(ge);
 
         }
 
@@ -77,7 +85,9 @@ public static class PbsInterpreter
             throw new UnclosedBlockException(missingBlock.Token, missingBlock.SourceCodeLineNumber);
         }
 
+        labelLines["end"] = lineList.Count;
         CheckAll(lineList);
+        LinkLabelsToGoto(labelLines, gotoElements);
 
         interpretationResults.Elements = lineList;
         interpretationResults.LinesOfCode = lineList.Count;
@@ -91,6 +101,19 @@ public static class PbsInterpreter
         {
             // Elements throw their own.
             element.ThrowIfNotValid();
+        }
+    }
+    
+    private static void LinkLabelsToGoto(Dictionary<string, int> labels, List<GotoElement> gotos)
+    {
+        foreach (var element in gotos)
+        {
+            var name = element.LabelName;
+
+            if (labels.ContainsKey(name))
+            {
+                element.SetTargetLine(labels[name]);
+            }
         }
     }
 
@@ -108,6 +131,8 @@ public static class PbsInterpreter
             {"while", () => new WhileElement()},
             {"end", () => new EndElement()},
             {"var", () => new VariableElement()},
+            {"label", () => new LabelElement()},
+            {"goto", () => new GotoElement()},
         };
 
     public const string TokenRegex = @"[a-zA-Z_][a-zA-Z\d_]*";
@@ -142,9 +167,9 @@ public static class PbsInterpreter
 
         var token = newLine.Split(" ")[0];
 
-        if (Tokens.ContainsKey(token))
+        if (Tokens.TryGetValue(token, out var token1))
         {
-            element = Tokens[token]();
+            element = token1();
         }
         
         element ??= DefaultDelegate();

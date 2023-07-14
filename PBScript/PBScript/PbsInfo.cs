@@ -20,5 +20,5 @@ public static class PbsInfo
 @$"Powered by Plant-Based-Script (PBScript) v{VersionCode} by Dominik Mezler/bluewingtitan
 Crafted with love, care and plants.
 
-Usage of ko-fi.com/bluewingtitan is definitely appreciated if you want to support this project!";
+ko-fi.com/bluewingtitan";
 }
